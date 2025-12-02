@@ -1,26 +1,127 @@
 @import "tailwindcss";
 
+/* Tailwind v4 theme tokens */
+@theme {
+  --color-brand-red: var(--brand-red);
+  --color-brand-rose: var(--brand-rose);
+  --color-bg-dark: var(--bg-dark);
+  --color-bg-card-dark: var(--bg-card-dark);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-border-dark: var(--border-dark);
+}
+
+/* 
+   BASE GLOBAL STYLES
+ */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Brand Colors */
+  --brand-red: #DC2626;
+  --brand-rose: #E11D48;
+
+  /* background shades for cyber theme */
+  --bg-dark: #0D0D0D;       
+  --bg-card-dark: #1A1A1A;  
+  --text-primary: #F5F5F5;  
+  --text-secondary: #B0B0B0; 
+  --border-dark: #333;       
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg-dark);
+  color: var(--text-primary);
+  font-family: var(--font-poppins), sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-poppins), sans-serif;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+
+/* PRIMARY BUTTON */
+.btn-primary {
+  background-color: var(--brand-red);
+  color: var(--text-primary);
+  font-weight: 700;
+  padding: 0.75rem 2rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.35s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: var(--brand-rose);
+  transform: scale(1.05);
+  box-shadow: 0 0 18px rgba(220, 38, 38, 0.45);
+}
+
+/* SECONDARY BUTTON */
+.btn-secondary {
+  background-color: var(--bg-card-dark);
+  color: var(--text-primary);
+  font-weight: 700;
+  padding: 0.75rem 2rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.35s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background-color: var(--border-dark);
+  transform: scale(1.05);
+  box-shadow: 0 0 18px rgba(80, 80, 80, 0.45);
+}
+
+/* CARD */
+.card {
+  background-color: var(--bg-card-dark);
+  padding: 1.5rem;
+  border-radius: 1rem;
+  border: 1px solid var(--border-dark);
+  transition: all 0.3s ease;
+  color: var(--text-primary);
+}
+
+.card:hover {
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+}
+
+/* CONTAINER */
+.container-custom {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+/* SECTION SPACING */
+.section-padding {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+/* SCROLLBAR */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: var(--bg-dark);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--brand-red);
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--brand-rose);
 }
