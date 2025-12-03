@@ -43,7 +43,7 @@ const FraudResourcesSection = () => {
 
   return (
     <section className="py-16 bg-linear-to-b from-bg-dark to-black">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* HEADER */}
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-brand-red/10 border border-brand-red/20 rounded-full mb-4">
@@ -87,7 +87,7 @@ const FraudResourcesSection = () => {
               <button
                 key={category.id}
                 onClick={() => setActiveCategory(category.id)}
-                className={`flex items-center gap-2 px-6 py-3 rounded-xl font-medium transition-all ${
+                className={`flex items-center gap-2 px-4 md:px-6 py-2.5 md:py-3 rounded-xl font-medium transition-all text-sm md:text-base ${
                   activeCategory === category.id
                     ? "bg-brand-red text-white shadow-lg shadow-brand-red/20"
                     : "bg-bg-card-dark text-text-secondary border border-border-dark hover:border-brand-red hover:text-white"
@@ -100,7 +100,7 @@ const FraudResourcesSection = () => {
           </div>
         </div>
 
-        {/* RESOURCE GRID */}
+        {/* RESOURCE GRID - 2 columns on mobile/tablet, 3 on desktop */}
         {filteredResources.length === 0 ? (
           <div className="text-center py-12">
             <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-bg-card-dark mb-4">
@@ -111,7 +111,7 @@ const FraudResourcesSection = () => {
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 lg:gap-6">
             {filteredResources.map((resource) => (
               <ResourceCard key={resource.id} resource={resource} />
             ))}

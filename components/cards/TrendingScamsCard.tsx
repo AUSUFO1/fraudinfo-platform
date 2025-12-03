@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { TrendingUp, AlertCircle, Clock, ExternalLink, Loader2 } from "lucide-react";
+import { TrendingUp, AlertCircle, Clock, ExternalLink, Loader2, RefreshCw } from "lucide-react";
 
 interface RSSItem {
   id: string;
@@ -40,37 +40,37 @@ const TrendingScamsCard = () => {
     }
   };
 
-  useEffect(() => {
-    async function loadFeed() {
-      try {
-        setLoading(true);
-        setError(null);
+  const loadFeed = async () => {
+    try {
+      setLoading(true);
+      setError(null);
 
-        const response = await fetch('/api/rss', { cache: 'no-store' });
+      const response = await fetch('/api/rss', { cache: 'no-store' });
 
-        if (!response.ok) {
-          const text = await response.text();
-          throw new Error(`API error ${response.status}: ${text}`);
-        }
-
-        const data = await response.json();
-
-        if (data.success && data.items) {
-          setScams(data.items.slice(0, 5));
-          setError(null);
-        } else {
-          const msg = data?.error || 'No live data available';
-          throw new Error(msg);
-        }
-      } catch (err: any) {
-        console.error('Failed to load trending scams:', err);
-        setError(err?.message || 'Unable to load live data');
-        setScams([]);
-      } finally {
-        setLoading(false);
+      if (!response.ok) {
+        const data = await response.json().catch(() => ({}));
+        const userMessage = data?.userMessage || 'Unable to load news feed';
+        throw new Error(userMessage);
       }
-    }
 
+      const data = await response.json();
+
+      if (data.success && data.items && data.items.length > 0) {
+        setScams(data.items.slice(0, 5));
+        setError(null);
+      } else {
+        throw new Error(data?.userMessage || 'No news available right now');
+      }
+    } catch (err: any) {
+      console.error('Failed to load trending scams:', err);
+      setError(err?.message || 'Unable to load news feed');
+      setScams([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     loadFeed();
     const interval = setInterval(loadFeed, 600_000);
     return () => clearInterval(interval);
@@ -96,19 +96,28 @@ const TrendingScamsCard = () => {
       </div>
 
       <div className="space-y-4 max-h-80 overflow-y-auto pr-2 custom-scrollbar">
-        {loading ? (
+        {loading && scams.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-8 text-text-secondary">
             <Loader2 className="w-8 h-8 mb-3 animate-spin" />
             <p className="text-sm">Loading latest scams...</p>
           </div>
         ) : error ? (
-          <div className="flex flex-col items-center justify-center py-8 text-text-secondary">
+          <div className="flex flex-col items-center justify-center py-8 text-center">
             <AlertCircle className="w-8 h-8 mb-3 text-yellow-500" />
-            <p className="text-sm text-center">
-              Unable to load live feed.
-              <br />
-              <span className="text-xs text-red-400 mt-2">{error}</span>
+            <p className="text-sm text-text-secondary mb-1">
+              Unable to load news feed
             </p>
+            <p className="text-xs text-text-muted mb-4">
+              Try refreshing in a moment
+            </p>
+            <button
+              onClick={loadFeed}
+              disabled={loading}
+              className="flex items-center gap-2 px-4 py-2 bg-brand-red hover:bg-brand-rose disabled:bg-text-muted disabled:cursor-not-allowed rounded-lg text-sm font-medium transition-colors"
+            >
+              <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
+              Refresh
+            </button>
           </div>
         ) : scams.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-8 text-text-secondary">
