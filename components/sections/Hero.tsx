@@ -5,7 +5,7 @@ import HeroSearch from "../Hero/HeroSearch";
 
 export default function Hero() {
   return (
-    <section className="relative h-[500px] flex flex-col justify-center items-center text-center px-4">
+    <section className="relative h-[500px] bg-linear-to-b from-bg-dark to-black flex flex-col justify-center items-center text-center px-4">
       {/* Tagline */}
       <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold leading-tight">
         <span className="text-white">Protect Yourself Against </span>

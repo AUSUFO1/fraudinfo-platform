@@ -21,19 +21,25 @@ export default function RealTimeUpdatesCard() {
     try {
       setLoading(true);
       setError(null);
+
       const res = await fetch("/api/alerts?pageSize=10", { cache: "no-store" });
+
       if (!res.ok) {
-        const txt = await res.text();
-        throw new Error(`API ${res.status}: ${txt}`);
+        console.error("API Error Response:", await res.text());
+        throw new Error("Unable to reach alert servers. Please try again later.");
       }
+
       const data = await res.json();
+
       if (!data.success) {
-        throw new Error(data.error || "No live alerts");
+        console.error("API Data Error:", data.error);
+        throw new Error("Unable to fetch alerts at the moment.");
       }
+
       setAlerts(data.items || []);
     } catch (err: any) {
       console.error("fetchAlerts error:", err);
-      setError(err?.message || "Unable to load alerts");
+      setError("Unable to load official alerts right now. Please try again later.");
       setAlerts([]);
     } finally {
       setLoading(false);
@@ -42,7 +48,7 @@ export default function RealTimeUpdatesCard() {
 
   useEffect(() => {
     fetchAlerts();
-    const interval = setInterval(fetchAlerts, 2 * 60 * 1000); // refresh every 2 minutes
+    const interval = setInterval(fetchAlerts, 2 * 60 * 1000);
     return () => clearInterval(interval);
   }, []);
 
@@ -77,11 +83,7 @@ export default function RealTimeUpdatesCard() {
         ) : error ? (
           <div className="flex flex-col items-center justify-center py-8 text-text-secondary">
             <AlertCircle className="w-8 h-8 mb-3 text-yellow-500" />
-            <p className="text-sm text-center">
-              Unable to load official alerts.
-              <br />
-              <span className="text-xs text-red-400">{error}</span>
-            </p>
+            <p className="text-sm text-center">{error}</p>
           </div>
         ) : alerts.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-8 text-text-secondary">
@@ -112,16 +114,6 @@ export default function RealTimeUpdatesCard() {
             </a>
           ))
         )}
-      </div>
-
-      <div className="mt-6 pt-4 border-t border-border-dark">
-        <a
-          href="/alerts"
-          className="w-full flex items-center justify-center gap-2 text-sm font-semibold text-brand-red hover:text-brand-rose transition-colors"
-        >
-          View All Alerts
-          <ExternalLink className="w-4 h-4" />
-        </a>
       </div>
     </div>
   );
