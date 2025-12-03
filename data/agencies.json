@@ -69,7 +69,7 @@
     "reportingChannels": [
       {
         "type": "website",
-        "value": "https://www.ic3.gov/Home/FileComplaint",
+        "value": "https://complaint.ic3.gov/",
         "label": "File a Complaint"
       }
     ]
