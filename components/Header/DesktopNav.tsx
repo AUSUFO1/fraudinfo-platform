@@ -30,12 +30,12 @@ export default function DesktopNav() {
                 href={link.href}
                 className={`font-medium text-sm relative group transition-colors ${
                   isActive
-                    ? "text-brand-red dark:text-brand-rose"
-                    : "text-gray-700 dark:text-gray-300 hover:text-brand-red dark:hover:text-brand-rose"
+                    ? "text-text-primary"
+                    : "text-text-secondary hover:text-brand-red"
                 }`}
               >
                 {link.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-red dark:bg-brand-rose transition-all duration-300 group-hover:w-full" />
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-red transition-all duration-300 group-hover:w-full" />
               </Link>
             </motion.div>
           );

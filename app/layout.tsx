@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Poppins } from 'next/font/google';
 import Header from '@/components/sections/Header';
+import Footer from '@/components/sections/Footer';
 import './globals.css';
 
 const poppins = Poppins({
@@ -67,10 +68,11 @@ export const metadata: Metadata = {
 function ClientBody({ children }: { children: React.ReactNode }) {
   return (
     <body
-      className={`${poppins.variable} font-poppins antialiased pt-5`}
+      className={`${poppins.variable} font-poppins antialiased pt-5 bg-[#0F0F11] text-white`}
     >
       <Header />
       <main className="min-h-screen">{children}</main>
+      <Footer />
     </body>
   );
 }

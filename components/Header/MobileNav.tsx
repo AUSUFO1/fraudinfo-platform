@@ -22,7 +22,7 @@ export default function MobileNav() {
     <>
       {/* Mobile Toggle Button */}
       <motion.button
-        className="md:hidden text-gray-700 dark:text-gray-300"
+        className="md:hidden text-text-primary"
         onClick={() => setIsOpen(!isOpen)}
         aria-expanded={isOpen}
         aria-label="Toggle menu"
@@ -61,7 +61,7 @@ export default function MobileNav() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.22 }}
-            className="md:hidden absolute top-full left-0 right-0 w-full bg-gray-50 dark:bg-gray-900 mt-2 px-4 py-4 overflow-hidden border-t border-brand-red/20 rounded-b-lg"
+            className="md:hidden absolute top-full left-0 right-0 w-full bg-bg-card-dark mt-2 px-4 py-4 overflow-hidden border-t border-border-dark rounded-b-lg"
           >
             <div className="flex flex-col gap-4">
               {navLinks.map((link, index) => {
@@ -77,10 +77,10 @@ export default function MobileNav() {
                     <Link
                       href={link.href}
                       onClick={() => setIsOpen(false)}
-                      className={`w-full text-left font-medium py-3 text-sm border-b border-gray-200 dark:border-gray-700 last:border-0 transition-colors ${
+                      className={`w-full text-left font-medium py-3 text-sm border-b border-border-dark last:border-0 transition-colors ${
                         isActive
-                          ? "text-brand-red dark:text-brand-rose"
-                          : "text-gray-900 dark:text-white hover:text-brand-red dark:hover:text-brand-rose"
+                          ? "text-text-primary"
+                          : "text-text-secondary hover:text-brand-red"
                       }`}
                     >
                       {link.label}
@@ -90,7 +90,7 @@ export default function MobileNav() {
               })}
 
               {/* Mobile Actions */}
-              <div className="flex items-center gap-3 pt-2 border-t border-gray-200 dark:border-gray-700">
+              <div className="flex items-center gap-3 pt-2 border-t border-border-dark">
                 <SearchButton />
               </div>
             </div>
