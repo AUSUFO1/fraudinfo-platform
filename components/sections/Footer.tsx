@@ -21,19 +21,19 @@ export default function Footer() {
         {/* Links */}
         <div className="flex gap-6 text-sm text-text-primary">
           <a
-            href="#"
+            href="/privacy"
             className="hover:text-brand-rose transition-colors"
           >
             Privacy
           </a>
           <a
-            href="#"
+            href="/terms"
             className="hover:text-brand-rose transition-colors"
           >
             Terms
           </a>
           <a
-            href="#"
+            href="mailto:verifyfraud01@gmail.com"
             className="hover:text-brand-rose transition-colors"
           >
             Contact
