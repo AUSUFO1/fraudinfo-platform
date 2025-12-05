@@ -5,13 +5,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Shield, X } from "lucide-react";
-import SearchButton from "./SearchButton";
 
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/agencies", label: "Agencies" },
   { href: "/prevention", label: "Prevention" },
-  { href: "/check-website", label: "Check Website" },
+  { href: "/about", label: "About" },
 ];
 
 export default function MobileNav() {
@@ -91,7 +90,6 @@ export default function MobileNav() {
 
               {/* Mobile Actions */}
               <div className="flex items-center gap-3 pt-2 border-t border-border-dark">
-                <SearchButton />
               </div>
             </div>
           </motion.div>

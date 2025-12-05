@@ -8,7 +8,7 @@ const navLinks = [
   { href: "/", label: "Home" },
   { href: "/agencies", label: "Agencies" },
   { href: "/prevention", label: "Prevention" },
-  { href: "/check-website", label: "Check Website" },
+  { href: "/about", label: "About" },
 ];
 
 export default function DesktopNav() {

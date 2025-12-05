@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 import Logo from "../Header/Logo";
 import DesktopNav from "../Header/DesktopNav";
 import MobileNav from "../Header/MobileNav";
-import SearchButton from "../Header/SearchButton";
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -35,10 +34,8 @@ export default function Header() {
           {/* Desktop Navigation */}
           <DesktopNav />
 
-          {/* Right Actions */}
           <div className="ml-auto flex items-center gap-2">
             <div className="hidden md:flex items-center gap-2">
-              <SearchButton />
             </div>
 
             {/* Mobile Menu */}

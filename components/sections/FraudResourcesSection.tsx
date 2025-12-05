@@ -6,10 +6,13 @@ import ResourceCard from "../cards/ResourceCard";
 import { fraudResources, resourceCategories } from "@/lib/fraud-resources";
 
 const FraudResourcesSection = () => {
-  const [activeCategory, setActiveCategory] = useState("all");
+  const [activeCategory, setActiveCategory] = useState<string | null>(null); // Changed to null initially
   const [searchQuery, setSearchQuery] = useState("");
 
   const filteredResources = fraudResources.filter((resource) => {
+    // If no category selected, don't show any resources
+    if (activeCategory === null) return false;
+    
     const matchesCategory =
       activeCategory === "all" || resource.category === activeCategory;
 
@@ -67,41 +70,55 @@ const FraudResourcesSection = () => {
           </p>
         </div>
 
-        {/* SEARCH BAR */}
-        <div className="mb-8">
-          <div className="relative max-w-md mx-auto mb-6">
-            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-text-secondary" />
+        {/* SEARCH BAR - Only show when category is selected */}
+        {activeCategory !== null && (
+          <div className="mb-8">
+            <div className="relative max-w-md mx-auto mb-6">
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-text-secondary" />
 
-            <input
-              type="text"
-              placeholder="Search resources..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-12 pr-4 py-3 bg-bg-card-dark border border-border-dark rounded-xl text-text-primary placeholder-text-secondary focus:outline-none focus:border-brand-red transition-colors"
-            />
+              <input
+                type="text"
+                placeholder="Search resources..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-12 pr-4 py-3 bg-bg-card-dark border border-border-dark rounded-xl text-text-primary placeholder-text-secondary focus:outline-none focus:border-brand-red transition-colors"
+              />
+            </div>
           </div>
+        )}
 
-          {/* CATEGORY FILTERS */}
-          <div className="flex flex-wrap justify-center gap-3">
-            {resourceCategories.map((category) => (
-              <button
-                key={category.id}
-                onClick={() => setActiveCategory(category.id)}
-                className={`flex items-center gap-2 px-4 md:px-6 py-2.5 md:py-3 rounded-xl font-medium transition-all text-sm md:text-base ${
-                  activeCategory === category.id
-                    ? "bg-brand-red text-white shadow-lg shadow-brand-red/20"
-                    : "bg-bg-card-dark text-text-secondary border border-border-dark hover:border-brand-red hover:text-white"
-                }`}
-              >
-                {getCategoryIcon(category.icon)}
-                <span>{category.label}</span>
-              </button>
-            ))}
-          </div>
+        {/* CATEGORY FILTERS */}
+        <div className="flex flex-wrap justify-center gap-3 mb-8">
+          {resourceCategories.map((category) => (
+            <button
+              key={category.id}
+              onClick={() => setActiveCategory(category.id)}
+              className={`flex items-center gap-2 px-4 md:px-6 py-2.5 md:py-3 rounded-xl font-medium transition-all text-sm md:text-base ${
+                activeCategory === category.id
+                  ? "bg-brand-red text-white shadow-lg shadow-brand-red/20"
+                  : "bg-bg-card-dark text-text-secondary border border-border-dark hover:border-brand-red hover:text-white"
+              }`}
+            >
+              {getCategoryIcon(category.icon)}
+              <span>{category.label}</span>
+            </button>
+          ))}
         </div>
 
-        {/* RESOURCE GRID - 2 columns on mobile/tablet, 3 on desktop */}
-        {filteredResources.length === 0 ? (
+        {/* RESOURCE GRID - Only show when category is selected */}
+        {activeCategory === null ? (
+          <div className="text-center py-12">
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-bg-card-dark mb-4">
+              <Grid className="w-8 h-8 text-text-secondary" />
+            </div>
+            <h3 className="text-xl font-semibold text-white mb-2">
+              Select a Category
+            </h3>
+            <p className="text-text-secondary">
+              Choose a category above to explore fraud-fighting resources
+            </p>
+          </div>
+        ) : filteredResources.length === 0 ? (
           <div className="text-center py-12">
             <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-bg-card-dark mb-4">
               <Search className="w-8 h-8 text-text-secondary" />
@@ -118,13 +135,15 @@ const FraudResourcesSection = () => {
           </div>
         )}
 
-        {/* FOOTER TEXT */}
-        <div className="mt-12 text-center">
-          <p className="text-sm text-text-secondary">
-            All resources are verified and regularly updated. Report issues or
-            suggest new resources via our contact page.
-          </p>
-        </div>
+        {/* FOOTER TEXT - Only show when resources are displayed */}
+        {activeCategory !== null && filteredResources.length > 0 && (
+          <div className="mt-12 text-center">
+            <p className="text-sm text-text-secondary">
+              All resources are verified and regularly updated. Report issues or
+              suggest new resources via our contact page.
+            </p>
+          </div>
+        )}
       </div>
     </section>
   );

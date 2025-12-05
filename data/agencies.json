@@ -2,7 +2,8 @@
   {
     "id": "efcc-ng",
     "name": "Economic and Financial Crimes Commission (EFCC)",
-    "description": "Nigeria's apex anti-graft agency responsible for investigating financial crimes, economic crimes, and corruption.",
+    "shortName": "EFCC",
+    "description": "Nigeria's apex anti-graft agency responsible for investigating financial crimes, economic crimes, and corruption. Handles cases of advance fee fraud, money laundering, cybercrime, and asset recovery.",
     "category": "financial-fraud",
     "region": "West Africa",
     "country": "Nigeria",
@@ -10,11 +11,14 @@
     "phone": "+234-1-7000-000",
     "email": "info@efccnigeria.org",
     "verified": true,
+    "languages": ["English"],
+    "emergencyAvailable": true,
     "reportingChannels": [
       {
         "type": "phone",
         "value": "+234-1-7000-000",
-        "label": "EFCC Hotline"
+        "label": "EFCC Hotline",
+        "available24h": false
       },
       {
         "type": "email",
@@ -26,12 +30,14 @@
         "value": "https://efccnigeria.org/efcc/report-a-case",
         "label": "Online Reporting Portal"
       }
-    ]
+    ],
+    "specialties": ["Advance Fee Fraud (419)", "Money Laundering", "Cybercrime", "Bank Fraud", "Asset Recovery"]
   },
   {
     "id": "icpc-ng",
     "name": "Independent Corrupt Practices Commission (ICPC)",
-    "description": "Nigerian agency focused on eliminating corruption in public offices and enforcing anti-corruption laws.",
+    "shortName": "ICPC",
+    "description": "Nigerian agency focused on eliminating corruption in public offices and enforcing anti-corruption laws. Investigates bribery, corrupt practices, and abuse of office.",
     "category": "law-enforcement",
     "region": "West Africa",
     "country": "Nigeria",
@@ -39,6 +45,8 @@
     "phone": "+234-9-5235-404",
     "email": "complaints@icpc.gov.ng",
     "verified": true,
+    "languages": ["English"],
+    "emergencyAvailable": false,
     "reportingChannels": [
       {
         "type": "phone",
@@ -55,69 +63,48 @@
         "value": "https://icpc.gov.ng/report-corruption",
         "label": "Online Portal"
       }
-    ]
+    ],
+    "specialties": ["Public Sector Corruption", "Bribery", "Abuse of Office", "Fraud in Contracts"]
   },
   {
-    "id": "fbi-ic3",
-    "name": "FBI Internet Crime Complaint Center (IC3)",
-    "description": "U.S. federal agency for reporting internet-facilitated criminal activity including online fraud and cybercrime.",
-    "category": "cybercrime",
-    "region": "North America",
-    "country": "United States",
-    "website": "https://www.ic3.gov",
+    "id": "ncc-ng",
+    "name": "Nigerian Communications Commission (NCC)",
+    "shortName": "NCC",
+    "description": "Regulator of Nigeria's telecommunications industry, handling complaints about telecom fraud, SIM swap fraud, unsolicited messages, and network-related scams.",
+    "category": "telecom-fraud",
+    "region": "West Africa",
+    "country": "Nigeria",
+    "website": "https://www.ncc.gov.ng",
+    "phone": "622",
+    "email": "info@ncc.gov.ng",
     "verified": true,
-    "reportingChannels": [
-      {
-        "type": "website",
-        "value": "https://complaint.ic3.gov/",
-        "label": "File a Complaint"
-      }
-    ]
-  },
-  {
-    "id": "actionfraud-uk",
-    "name": "Action Fraud UK",
-    "description": "UK's national reporting centre for fraud and cybercrime operated by the City of London Police.",
-    "category": "cybercrime",
-    "region": "Europe",
-    "country": "United Kingdom",
-    "website": "https://www.actionfraud.police.uk",
-    "phone": "0300 123 2040",
-    "verified": true,
+    "languages": ["English"],
+    "emergencyAvailable": false,
     "reportingChannels": [
       {
         "type": "phone",
-        "value": "0300 123 2040",
-        "label": "Report Fraud Hotline"
+        "value": "622",
+        "label": "NCC Consumer Complaints (Toll-Free)",
+        "available24h": true
+      },
+      {
+        "type": "email",
+        "value": "info@ncc.gov.ng",
+        "label": "Email NCC"
       },
       {
         "type": "website",
-        "value": "https://www.actionfraud.police.uk/report",
-        "label": "Online Reporting"
+        "value": "https://www.ncc.gov.ng/consumers/consumer-complaint",
+        "label": "Consumer Portal"
       }
-    ]
-  },
-  {
-    "id": "interpol-cybercrime",
-    "name": "INTERPOL Cybercrime Programme",
-    "description": "International police organization coordinating cross-border cybercrime investigations and providing support to member countries.",
-    "category": "international",
-    "region": "Global",
-    "country": "International",
-    "website": "https://www.interpol.int/Crimes/Cybercrime",
-    "verified": true,
-    "reportingChannels": [
-      {
-        "type": "website",
-        "value": "https://www.interpol.int/Contacts/Contact-INTERPOL",
-        "label": "Contact INTERPOL"
-      }
-    ]
+    ],
+    "specialties": ["SIM Swap Fraud", "Telecom Fraud", "SMS Spam", "Network Issues"]
   },
   {
     "id": "fccpc-ng",
     "name": "Federal Competition and Consumer Protection Commission (FCCPC)",
-    "description": "Nigeria's consumer protection agency handling complaints about unfair business practices and consumer fraud.",
+    "shortName": "FCCPC",
+    "description": "Nigeria's consumer protection agency handling complaints about unfair business practices, consumer fraud, false advertising, and product safety issues.",
     "category": "consumer-protection",
     "region": "West Africa",
     "country": "Nigeria",
@@ -125,6 +112,8 @@
     "phone": "+234-1-888-3187",
     "email": "contact@fccpc.gov.ng",
     "verified": true,
+    "languages": ["English"],
+    "emergencyAvailable": false,
     "reportingChannels": [
       {
         "type": "phone",
@@ -141,17 +130,42 @@
         "value": "https://www.fccpc.gov.ng/complaints",
         "label": "File Complaint Online"
       }
-    ]
+    ],
+    "specialties": ["Consumer Rights", "False Advertising", "Product Safety", "Unfair Trade Practices"]
+  },
+  {
+    "id": "fbi-ic3",
+    "name": "FBI Internet Crime Complaint Center (IC3)",
+    "shortName": "IC3",
+    "description": "U.S. federal agency for reporting internet-facilitated criminal activity including online fraud, cybercrime, identity theft, and computer intrusions.",
+    "category": "cybercrime",
+    "region": "North America",
+    "country": "United States",
+    "website": "https://www.ic3.gov",
+    "verified": true,
+    "languages": ["English"],
+    "emergencyAvailable": false,
+    "reportingChannels": [
+      {
+        "type": "website",
+        "value": "https://www.ic3.gov/Home/FileComplaint",
+        "label": "File a Complaint"
+      }
+    ],
+    "specialties": ["Internet Fraud", "Cybercrime", "Identity Theft", "Business Email Compromise", "Romance Scams"]
   },
   {
     "id": "ftc-usa",
     "name": "Federal Trade Commission (FTC)",
-    "description": "U.S. agency protecting consumers from deceptive and unfair business practices, including fraud and scams.",
+    "shortName": "FTC",
+    "description": "U.S. agency protecting consumers from deceptive and unfair business practices, including fraud, scams, identity theft, and data breaches.",
     "category": "consumer-protection",
     "region": "North America",
     "country": "United States",
     "website": "https://www.ftc.gov",
     "verified": true,
+    "languages": ["English", "Spanish"],
+    "emergencyAvailable": false,
     "reportingChannels": [
       {
         "type": "website",
@@ -163,35 +177,583 @@
         "value": "1-877-382-4357",
         "label": "FTC Consumer Hotline"
       }
-    ]
+    ],
+    "specialties": ["Consumer Fraud", "Identity Theft", "Data Breaches", "Scams", "Business Fraud"]
   },
   {
-    "id": "ncc-ng",
-    "name": "Nigerian Communications Commission (NCC)",
-    "description": "Regulator of Nigeria's telecommunications industry, handling complaints about telecom fraud and SIM swap fraud.",
-    "category": "telecom-fraud",
-    "region": "West Africa",
-    "country": "Nigeria",
-    "website": "https://www.ncc.gov.ng",
-    "phone": "622",
-    "email": "info@ncc.gov.ng",
+    "id": "sec-usa",
+    "name": "U.S. Securities and Exchange Commission (SEC)",
+    "shortName": "SEC",
+    "description": "Federal agency protecting investors and maintaining fair, orderly markets. Investigates securities fraud, investment scams, and Ponzi schemes.",
+    "category": "financial-fraud",
+    "region": "North America",
+    "country": "United States",
+    "website": "https://www.sec.gov",
+    "phone": "1-800-732-0330",
+    "email": "enforcement@sec.gov",
     "verified": true,
+    "languages": ["English"],
+    "emergencyAvailable": false,
+    "reportingChannels": [
+      {
+        "type": "website",
+        "value": "https://www.sec.gov/tcr",
+        "label": "Report Securities Fraud"
+      },
+      {
+        "type": "phone",
+        "value": "1-800-732-0330",
+        "label": "SEC Investor Hotline"
+      }
+    ],
+    "specialties": ["Securities Fraud", "Investment Scams", "Ponzi Schemes", "Insider Trading"]
+  },
+  {
+    "id": "actionfraud-uk",
+    "name": "Action Fraud UK",
+    "shortName": "Action Fraud",
+    "description": "UK's national reporting centre for fraud and cybercrime operated by the City of London Police. Central hub for reporting all types of fraud.",
+    "category": "cybercrime",
+    "region": "Europe",
+    "country": "United Kingdom",
+    "website": "https://www.actionfraud.police.uk",
+    "phone": "0300 123 2040",
+    "verified": true,
+    "languages": ["English", "Welsh"],
+    "emergencyAvailable": false,
     "reportingChannels": [
       {
         "type": "phone",
-        "value": "622",
-        "label": "NCC Consumer Complaints (Toll-Free)"
-      },
-      {
-        "type": "email",
-        "value": "info@ncc.gov.ng",
-        "label": "Email NCC"
+        "value": "0300 123 2040",
+        "label": "Report Fraud Hotline",
+        "available24h": false
       },
       {
         "type": "website",
-        "value": "https://www.ncc.gov.ng/consumers/consumer-complaint",
-        "label": "Consumer Portal"
+        "value": "https://www.actionfraud.police.uk/report",
+        "label": "Online Reporting"
       }
-    ]
+    ],
+    "specialties": ["All Types of Fraud", "Cybercrime", "Online Scams", "Identity Fraud"]
+  },
+  {
+    "id": "ncsc-uk",
+    "name": "National Cyber Security Centre (NCSC)",
+    "shortName": "NCSC",
+    "description": "UK's authority on cyber security, providing guidance and support for organizations and individuals facing cyber threats including phishing and malware.",
+    "category": "cybercrime",
+    "region": "Europe",
+    "country": "United Kingdom",
+    "website": "https://www.ncsc.gov.uk",
+    "email": "report@phishing.gov.uk",
+    "verified": true,
+    "languages": ["English"],
+    "emergencyAvailable": false,
+    "reportingChannels": [
+      {
+        "type": "email",
+        "value": "report@phishing.gov.uk",
+        "label": "Report Phishing Emails"
+      },
+      {
+        "type": "website",
+        "value": "https://www.ncsc.gov.uk/section/about-this-website/report-scam-email",
+        "label": "Report Cyber Incidents"
+      }
+    ],
+    "specialties": ["Phishing", "Malware", "Cyber Attacks", "Data Breaches"]
+  },
+  {
+    "id": "fca-uk",
+    "name": "Financial Conduct Authority (FCA)",
+    "shortName": "FCA",
+    "description": "UK financial regulator protecting consumers from unfair, misleading or fraudulent financial practices and ensuring market integrity.",
+    "category": "financial-fraud",
+    "region": "Europe",
+    "country": "United Kingdom",
+    "website": "https://www.fca.org.uk",
+    "phone": "0800 111 6768",
+    "verified": true,
+    "languages": ["English"],
+    "emergencyAvailable": false,
+    "reportingChannels": [
+      {
+        "type": "phone",
+        "value": "0800 111 6768",
+        "label": "Consumer Helpline"
+      },
+      {
+        "type": "website",
+        "value": "https://www.fca.org.uk/consumers/report-scam-unauthorised-firm",
+        "label": "Report Financial Scam"
+      }
+    ],
+    "specialties": ["Investment Fraud", "Banking Fraud", "Pension Scams", "Crypto Fraud"]
+  },
+  {
+    "id": "europol-ec3",
+    "name": "Europol European Cybercrime Centre (EC3)",
+    "shortName": "Europol EC3",
+    "description": "European Union's law enforcement agency combating cybercrime across member states. Coordinates investigations into organized cybercrime networks.",
+    "category": "international",
+    "region": "Europe",
+    "country": "European Union",
+    "website": "https://www.europol.europa.eu",
+    "verified": true,
+    "languages": ["English", "Multiple EU Languages"],
+    "emergencyAvailable": false,
+    "reportingChannels": [
+      {
+        "type": "website",
+        "value": "https://www.europol.europa.eu/report-a-crime",
+        "label": "Report Crime Online"
+      }
+    ],
+    "specialties": ["Cybercrime", "Payment Card Fraud", "Online Child Sexual Exploitation", "Cross-border Fraud"]
+  },
+  {
+    "id": "accc-australia",
+    "name": "Australian Competition and Consumer Commission (ACCC) - Scamwatch",
+    "shortName": "Scamwatch",
+    "description": "Australian government agency providing information on scams and allowing consumers to report scam activity. Tracks scam trends across Australia.",
+    "category": "consumer-protection",
+    "region": "Oceania",
+    "country": "Australia",
+    "website": "https://www.scamwatch.gov.au",
+    "phone": "1300 795 995",
+    "verified": true,
+    "languages": ["English"],
+    "emergencyAvailable": false,
+    "reportingChannels": [
+      {
+        "type": "website",
+        "value": "https://www.scamwatch.gov.au/report-a-scam",
+        "label": "Report a Scam"
+      },
+      {
+        "type": "phone",
+        "value": "1300 795 995",
+        "label": "Consumer Helpline"
+      }
+    ],
+    "specialties": ["Investment Scams", "Dating Scams", "Online Shopping Fraud", "Job Scams"]
+  },
+  {
+    "id": "acsc-australia",
+    "name": "Australian Cyber Security Centre (ACSC)",
+    "shortName": "ACSC",
+    "description": "Australia's national authority on cyber security, helping organizations and individuals protect against cyber threats and report incidents.",
+    "category": "cybercrime",
+    "region": "Oceania",
+    "country": "Australia",
+    "website": "https://www.cyber.gov.au",
+    "phone": "1300 292 371",
+    "verified": true,
+    "languages": ["English"],
+    "emergencyAvailable": true,
+    "reportingChannels": [
+      {
+        "type": "phone",
+        "value": "1300 292 371",
+        "label": "Cyber Security Hotline",
+        "available24h": true
+      },
+      {
+        "type": "website",
+        "value": "https://www.cyber.gov.au/report",
+        "label": "Report Cyber Incident"
+      }
+    ],
+    "specialties": ["Cyber Attacks", "Ransomware", "Data Breaches", "Phishing"]
+  },
+  {
+    "id": "cafc-canada",
+    "name": "Canadian Anti-Fraud Centre (CAFC)",
+    "shortName": "CAFC",
+    "description": "Canada's central agency collecting information on fraud and identity theft. Provides support to victims and coordinates with law enforcement.",
+    "category": "financial-fraud",
+    "region": "North America",
+    "country": "Canada",
+    "website": "https://www.antifraudcentre-centreantifraude.ca",
+    "phone": "1-888-495-8501",
+    "email": "info@antifraudcentre.ca",
+    "verified": true,
+    "languages": ["English", "French"],
+    "emergencyAvailable": false,
+    "reportingChannels": [
+      {
+        "type": "phone",
+        "value": "1-888-495-8501",
+        "label": "Fraud Reporting Hotline"
+      },
+      {
+        "type": "website",
+        "value": "https://www.antifraudcentre-centreantifraude.ca/report-signalez-eng.htm",
+        "label": "Online Reporting"
+      },
+      {
+        "type": "email",
+        "value": "info@antifraudcentre.ca",
+        "label": "Email Reports"
+      }
+    ],
+    "specialties": ["Mass Marketing Fraud", "Romance Scams", "Identity Theft", "Investment Fraud"]
+  },
+  {
+    "id": "interpol-cybercrime",
+    "name": "INTERPOL Cybercrime Programme",
+    "shortName": "INTERPOL",
+    "description": "International police organization coordinating cross-border cybercrime investigations and providing support to 195 member countries worldwide.",
+    "category": "international",
+    "region": "Global",
+    "country": "International",
+    "website": "https://www.interpol.int/Crimes/Cybercrime",
+    "verified": true,
+    "languages": ["English", "French", "Spanish", "Arabic"],
+    "emergencyAvailable": false,
+    "reportingChannels": [
+      {
+        "type": "website",
+        "value": "https://www.interpol.int/Contacts/Contact-INTERPOL",
+        "label": "Contact INTERPOL"
+      }
+    ],
+    "specialties": ["Cross-border Cybercrime", "International Fraud", "Cybercrime Coordination"]
+  },
+  {
+    "id": "safaricom-kenya",
+    "name": "Safaricom Fraud Management - Kenya",
+    "shortName": "Safaricom",
+    "description": "Kenya's largest telecom operator with dedicated fraud management team handling M-Pesa fraud, SIM swap, and mobile money scams.",
+    "category": "telecom-fraud",
+    "region": "East Africa",
+    "country": "Kenya",
+    "website": "https://www.safaricom.co.ke",
+    "phone": "0722000000",
+    "verified": true,
+    "languages": ["English", "Swahili"],
+    "emergencyAvailable": true,
+    "reportingChannels": [
+      {
+        "type": "phone",
+        "value": "0722000000",
+        "label": "Fraud Hotline",
+        "available24h": true
+      },
+      {
+        "type": "website",
+        "value": "https://www.safaricom.co.ke/personal/get-help/report-fraud",
+        "label": "Report Fraud Online"
+      }
+    ],
+    "specialties": ["M-Pesa Fraud", "SIM Swap", "Mobile Money Scams", "Airtime Fraud"]
+  },
+  {
+    "id": "saps-sa",
+    "name": "South African Police Service (SAPS) - Commercial Crime Unit",
+    "shortName": "SAPS Commercial Crime",
+    "description": "South Africa's specialized police unit investigating commercial crimes including fraud, corruption, and cybercrime affecting businesses and individuals.",
+    "category": "law-enforcement",
+    "region": "Southern Africa",
+    "country": "South Africa",
+    "website": "https://www.saps.gov.za",
+    "phone": "10111",
+    "verified": true,
+    "languages": ["English", "Afrikaans", "Zulu", "Xhosa"],
+    "emergencyAvailable": true,
+    "reportingChannels": [
+      {
+        "type": "phone",
+        "value": "10111",
+        "label": "Emergency Police Line",
+        "available24h": true
+      },
+      {
+        "type": "website",
+        "value": "https://www.saps.gov.za/services/crimestop.php",
+        "label": "Crime Stop Portal"
+      }
+    ],
+    "specialties": ["Commercial Crime", "Fraud", "Corruption", "Cybercrime"]
+  },
+  {
+    "id": "cert-india",
+    "name": "Indian Computer Emergency Response Team (CERT-In)",
+    "shortName": "CERT-In",
+    "description": "India's national nodal agency for responding to computer security incidents. Handles cyber security threats, incidents, and vulnerability reports.",
+    "category": "cybercrime",
+    "region": "South Asia",
+    "country": "India",
+    "website": "https://www.cert-in.org.in",
+    "phone": "+91-11-24368572",
+    "email": "incident@cert-in.org.in",
+    "verified": true,
+    "languages": ["English", "Hindi"],
+    "emergencyAvailable": true,
+    "reportingChannels": [
+      {
+        "type": "phone",
+        "value": "+91-11-24368572",
+        "label": "Incident Helpline"
+      },
+      {
+        "type": "email",
+        "value": "incident@cert-in.org.in",
+        "label": "Report Incident"
+      },
+      {
+        "type": "website",
+        "value": "https://www.cert-in.org.in/Incident.jsp",
+        "label": "Online Reporting"
+      }
+    ],
+    "specialties": ["Cyber Incidents", "Hacking", "Phishing", "Malware Attacks"]
+  },
+  {
+    "id": "cybercrime-india",
+    "name": "National Cybercrime Reporting Portal - India",
+    "shortName": "Cybercrime Portal India",
+    "description": "India's national portal for citizens to report all types of cybercrimes. Integrated with law enforcement across all states.",
+    "category": "cybercrime",
+    "region": "South Asia",
+    "country": "India",
+    "website": "https://cybercrime.gov.in",
+    "phone": "155260",
+    "verified": true,
+    "languages": ["English", "Hindi", "Regional Languages"],
+    "emergencyAvailable": true,
+    "reportingChannels": [
+      {
+        "type": "phone",
+        "value": "155260",
+        "label": "Cybercrime Helpline",
+        "available24h": true
+      },
+      {
+        "type": "website",
+        "value": "https://cybercrime.gov.in/Webform/Crime_NodalAuthority.aspx",
+        "label": "Report Cybercrime"
+      }
+    ],
+    "specialties": ["Online Fraud", "Cyberbullying", "Hacking", "Social Media Crimes"]
+  },
+  {
+    "id": "monetary-singapore",
+    "name": "Monetary Authority of Singapore (MAS)",
+    "shortName": "MAS",
+    "description": "Singapore's central bank and integrated financial regulator. Oversees banking, securities, insurance sectors and combats financial fraud.",
+    "category": "financial-fraud",
+    "region": "Southeast Asia",
+    "country": "Singapore",
+    "website": "https://www.mas.gov.sg",
+    "phone": "+65-6225-5577",
+    "verified": true,
+    "languages": ["English", "Mandarin", "Malay", "Tamil"],
+    "emergencyAvailable": false,
+    "reportingChannels": [
+      {
+        "type": "phone",
+        "value": "+65-6225-5577",
+        "label": "MAS Hotline"
+      },
+      {
+        "type": "website",
+        "value": "https://www.mas.gov.sg/report-financial-crime",
+        "label": "Report Financial Crime"
+      }
+    ],
+    "specialties": ["Banking Fraud", "Investment Scams", "Money Laundering", "Securities Fraud"]
+  },
+  {
+    "id": "scamalert-singapore",
+    "name": "ScamAlert - Singapore Police Force",
+    "shortName": "ScamAlert SG",
+    "description": "Singapore's anti-scam public education initiative by the Police Force. Provides scam alerts and reporting mechanisms for all types of scams.",
+    "category": "law-enforcement",
+    "region": "Southeast Asia",
+    "country": "Singapore",
+    "website": "https://www.scamalert.sg",
+    "phone": "1800-255-0000",
+    "verified": true,
+    "languages": ["English", "Mandarin", "Malay", "Tamil"],
+    "emergencyAvailable": true,
+    "reportingChannels": [
+      {
+        "type": "phone",
+        "value": "1800-255-0000",
+        "label": "Police Hotline",
+        "available24h": true
+      },
+      {
+        "type": "website",
+        "value": "https://www.police.gov.sg/e-services/report/crime-and-suspicious-activities",
+        "label": "Online Crime Report"
+      }
+    ],
+    "specialties": ["All Scam Types", "E-commerce Fraud", "Love Scams", "Loan Scams"]
+  },
+  {
+    "id": "banco-central-brazil",
+    "name": "Banco Central do Brasil - Financial Crimes",
+    "shortName": "BCB",
+    "description": "Brazil's central bank monitoring financial system stability and investigating financial crimes including banking fraud and payment fraud.",
+    "category": "financial-fraud",
+    "region": "South America",
+    "country": "Brazil",
+    "website": "https://www.bcb.gov.br",
+    "phone": "145",
+    "verified": true,
+    "languages": ["Portuguese"],
+    "emergencyAvailable": false,
+    "reportingChannels": [
+      {
+        "type": "phone",
+        "value": "145",
+        "label": "BCB Consumer Service"
+      },
+      {
+        "type": "website",
+        "value": "https://www.bcb.gov.br/acessoinformacao/denuncias",
+        "label": "Report Financial Crime"
+      }
+    ],
+    "specialties": ["Banking Fraud", "Payment Fraud", "Financial Institution Fraud"]
+  },
+  {
+    "id": "condusef-mexico",
+    "name": "Comisión Nacional para la Protección y Defensa de los Usuarios de Servicios Financieros (CONDUSEF)",
+    "shortName": "CONDUSEF",
+    "description": "Mexico's financial consumer protection agency defending rights of financial services users and handling fraud complaints against financial institutions.",
+    "category": "consumer-protection",
+    "region": "North America",
+    "country": "Mexico",
+    "website": "https://www.condusef.gob.mx",
+    "phone": "55-5340-0999",
+    "verified": true,
+    "languages": ["Spanish"],
+    "emergencyAvailable": false,
+    "reportingChannels": [
+      {
+        "type": "phone",
+        "value": "55-5340-0999",
+        "label": "CONDUSEF Hotline"
+      },
+      {
+        "type": "website",
+        "value": "https://www.condusef.gob.mx/denuncia",
+        "label": "File Complaint"
+      }
+    ],
+    "specialties": ["Banking Fraud", "Insurance Fraud", "Credit Card Fraud", "Financial Service Issues"]
+  },
+  {
+    "id": "cnb-uae",
+    "name": "Central Bank of UAE - Financial Fraud Unit",
+    "shortName": "CB UAE",
+    "description": "UAE's central bank regulating financial services and investigating fraud in banking, insurance, and financial technology sectors.",
+    "category": "financial-fraud",
+    "region": "Middle East",
+    "country": "United Arab Emirates",
+    "website": "https://www.centralbank.ae",
+    "phone": "+971-2-691-9222",
+    "verified": true,
+    "languages": ["Arabic", "English"],
+    "emergencyAvailable": false,
+    "reportingChannels": [
+      {
+        "type": "phone",
+        "value": "+971-2-691-9222",
+        "label": "Central Bank Hotline"
+      },
+      {
+        "type": "website",
+        "value": "https://www.centralbank.ae/en/cbuae-complaints",
+        "label": "Submit Complaint"
+      }
+    ],
+    "specialties": ["Banking Fraud", "Credit Card Fraud", "Insurance Fraud", "Fintech Fraud"]
+  },
+  {
+    "id": "ksa-security",
+    "name": "Saudi Arabia National Cybersecurity Authority",
+    "shortName": "NCA Saudi",
+    "description": "Kingdom of Saudi Arabia's national authority protecting cyberspace, critical infrastructure, and responding to cyber incidents.",
+    "category": "cybercrime",
+    "region": "Middle East",
+    "country": "Saudi Arabia",
+    "website": "https://nca.gov.sa",
+    "phone": "1447",
+    "verified": true,
+    "languages": ["Arabic", "English"],
+    "emergencyAvailable": true,
+    "reportingChannels": [
+      {
+        "type": "phone",
+        "value": "1447",
+        "label": "Cyber Emergency",
+        "available24h": true
+      },
+      {
+        "type": "website",
+        "value": "https://nca.gov.sa/pages/reportincident.html",
+        "label": "Report Cyber Incident"
+      }
+    ],
+    "specialties": ["Cyber Attacks", "Data Breaches", "Phishing", "Hacking"]
+  },
+  {
+    "id": "jcert-japan",
+    "name": "Japan Computer Emergency Response Team (JPCERT/CC)",
+    "shortName": "JPCERT/CC",
+    "description": "Japan's cybersecurity coordination center handling computer security incidents, vulnerability coordination, and international cybersecurity cooperation.",
+    "category": "cybercrime",
+    "region": "East Asia",
+    "country": "Japan",
+    "website": "https://www.jpcert.or.jp",
+    "email": "info@jpcert.or.jp",
+    "verified": true,
+    "languages": ["Japanese", "English"],
+    "emergencyAvailable": true,
+    "reportingChannels": [
+      {
+        "type": "email",
+        "value": "info@jpcert.or.jp",
+        "label": "Report Incident"
+      },
+      {
+        "type": "website",
+        "value": "https://www.jpcert.or.jp/english/ir/form.html",
+        "label": "Incident Report Form"
+      }
+    ],
+    "specialties": ["Cyber Incidents", "Malware", "Phishing", "Vulnerability Reports"]
+  },
+  {
+    "id": "krcert-korea",
+    "name": "Korea Internet & Security Agency (KISA)",
+    "shortName": "KISA",
+    "description": "South Korea's national cybersecurity agency providing comprehensive internet security services and responding to cyber threats.",
+    "category": "cybercrime",
+    "region": "East Asia",
+    "country": "South Korea",
+    "website": "https://www.kisa.or.kr",
+    "phone": "118",
+    "verified": true,
+    "languages": ["Korean", "English"],
+    "emergencyAvailable": true,
+    "reportingChannels": [
+      {
+        "type": "phone",
+        "value": "118",
+        "label": "Cyber Emergency",
+        "available24h": true
+      },
+      {
+        "type": "website",
+        "value": "https://www.kisa.or.kr/eng/main.jsp",
+        "label": "Report Cybercrime"
+      }
+    ],
+    "specialties": ["Cyber Attacks", "Hacking", "Phishing", "DDoS Attacks"]
   }
 ]
