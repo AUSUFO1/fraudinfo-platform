@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useMemo, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
+import { X } from "lucide-react";
 
 import SearchFilters from "@/components/infosearch/SearchFilters";
 import SearchResults from "@/components/infosearch/SearchResults";
@@ -31,6 +32,21 @@ export default function InfoSearchPage() {
 
   // Clear filters handler
   const clearFilters = useCallback(() => {
+    setFilters({
+      category: "all",
+      region: "all",
+      resourceType: "all"
+    });
+  }, []);
+
+  // Clear search query
+  const clearSearch = useCallback(() => {
+    setQuery("");
+  }, []);
+
+  // Clear everything
+  const clearAll = useCallback(() => {
+    setQuery("");
     setFilters({
       category: "all",
       region: "all",
@@ -75,19 +91,79 @@ export default function InfoSearchPage() {
 
         {/* Search Results */}
         <div className="flex-1">
+          {/* Active Search/Filter Bar */}
           {(query || hasActiveFilters(filters)) && (
             <div className="mb-4 p-4 bg-bg-card-dark rounded-lg border border-gray-800">
-              <p className="text-text-secondary text-sm">
-                Found <span className="text-brand-red font-semibold">{results.total}</span> results
-                {' '}({results.agencies.length} agencies, {results.resources.length} resources)
-              </p>
-              {query && (
-                <p className="text-text-secondary text-xs mt-1">
-                  Searching for: <span className="text-text-primary font-medium">"{query}"</span>
+              <div className="flex items-center justify-between mb-2">
+                <p className="text-text-secondary text-sm">
+                  Found <span className="text-brand-red font-semibold">{results.total}</span> results
+                  {' '}({results.agencies.length} agencies, {results.resources.length} resources)
                 </p>
-              )}
+                
+                {(query || hasActiveFilters(filters)) && (
+                  <button
+                    onClick={clearAll}
+                    className="text-xs text-brand-red hover:text-brand-rose transition-colors flex items-center gap-1"
+                  >
+                    <X className="w-3 h-3" />
+                    Clear All
+                  </button>
+                )}
+              </div>
+              
+              {/* Active Filters Display */}
+              <div className="flex flex-wrap gap-2">
+                {query && (
+                  <span className="inline-flex items-center gap-1 px-3 py-1 bg-brand-red/20 text-brand-red text-xs rounded-full">
+                    Search: "{query}"
+                    <button
+                      onClick={clearSearch}
+                      className="hover:bg-brand-red/30 rounded-full p-0.5 transition-colors"
+                    >
+                      <X className="w-3 h-3" />
+                    </button>
+                  </span>
+                )}
+                
+                {filters.category !== 'all' && (
+                  <span className="inline-flex items-center gap-1 px-3 py-1 bg-brand-rose/20 text-brand-rose text-xs rounded-full">
+                    Category: {filters.category}
+                    <button
+                      onClick={() => updateFilter('category', 'all')}
+                      className="hover:bg-brand-rose/30 rounded-full p-0.5 transition-colors"
+                    >
+                      <X className="w-3 h-3" />
+                    </button>
+                  </span>
+                )}
+                
+                {filters.region !== 'all' && (
+                  <span className="inline-flex items-center gap-1 px-3 py-1 bg-brand-rose/20 text-brand-rose text-xs rounded-full">
+                    Region: {filters.region}
+                    <button
+                      onClick={() => updateFilter('region', 'all')}
+                      className="hover:bg-brand-rose/30 rounded-full p-0.5 transition-colors"
+                    >
+                      <X className="w-3 h-3" />
+                    </button>
+                  </span>
+                )}
+                
+                {filters.resourceType !== 'all' && (
+                  <span className="inline-flex items-center gap-1 px-3 py-1 bg-brand-rose/20 text-brand-rose text-xs rounded-full">
+                    Resource: {filters.resourceType}
+                    <button
+                      onClick={() => updateFilter('resourceType', 'all')}
+                      className="hover:bg-brand-rose/30 rounded-full p-0.5 transition-colors"
+                    >
+                      <X className="w-3 h-3" />
+                    </button>
+                  </span>
+                )}
+              </div>
             </div>
           )}
+          
           <SearchResults results={results} searchQuery={query} />
         </div>
       </div>

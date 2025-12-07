@@ -1,6 +1,7 @@
 // All agencies, resources, and filter constants
 
-import { Agency, FraudResource } from '@/types/fraud.types';
+import { Agency } from '@/types/fraud.types';
+import { FraudResource } from './fraud-resources';
 
 export const agencies: Agency[] = [
   {

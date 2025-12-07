@@ -11,7 +11,7 @@ interface SearchResultsProps {
 }
 
 export default function SearchResults({ results, searchQuery }: SearchResultsProps) {
-  console.log('🎨 SearchResults Component:');
+  console.log('SearchResults Component:');
   console.log('  Total Results:', results.total);
   console.log('  Agencies:', results.agencies.length, results.agencies);
   console.log('  Resources:', results.resources.length, results.resources);

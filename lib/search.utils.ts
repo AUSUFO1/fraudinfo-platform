@@ -1,7 +1,12 @@
+// ===================================
+// FILE: src/lib/search.utils.ts
+// FIXED: Import from correct location
+// ===================================
+
 import { Agency, FraudResource, SearchFilters, SearchResults } from '@/types/fraud.types';
 
-/*
- Performs search across agencies and resources
+/**
+ * Performs search across agencies and resources
  */
 export function performSearch(
   query: string,
@@ -21,8 +26,8 @@ export function performSearch(
   };
 }
 
-/*
- Search agencies with filters
+/**
+ * Search agencies with filters
  */
 function searchAgencies(
   query: string,
@@ -60,7 +65,6 @@ function searchAgencies(
 
 /**
  * Search resources with filters
- * FIXED: Now properly filters resources even with search query
  */
 function searchResources(
   query: string,
@@ -92,8 +96,8 @@ function searchResources(
   });
 }
 
-/*
- Check if filters are active (not on default 'all')
+/**
+ * Check if filters are active (not on default 'all')
  */
 export function hasActiveFilters(filters: SearchFilters): boolean {
   return (
