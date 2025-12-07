@@ -30,7 +30,7 @@ FraudInfo provides real-time fraud alerts, scam databases, and community-driven 
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/AUSUFO1/fraudinfo-platform.git
+git clone https://github.com/AUSUFO1/fraudinfo.git
 cd fraudinfo-platform
 ```
 
