@@ -4,7 +4,7 @@ export default function AboutSection() {
   return (
     <section className="py-20 px-6 sm:px-10">
       <div className="max-w-5xl mx-auto text-center">
-        <h1 className="text-x2l sm:text-3xl font-extrabold mb-6">
+        <h1 className="text-xl sm:text-2xl font-extrabold mb-6">
           Our Mission: Empowering Global Fraud Prevention
         </h1>
 

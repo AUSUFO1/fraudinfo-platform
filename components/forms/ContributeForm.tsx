@@ -113,11 +113,10 @@ export default function ContributeForm() {
             />
           </div>
 
-          {/* Rose theme button */}
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 rounded-lg 
+            className="w-50 py-3 rounded-lg 
             bg-brand-rose 
             text-white font-semibold 
             hover:bg-brand-rose/80 

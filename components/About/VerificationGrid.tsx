@@ -46,7 +46,7 @@ export default function VerificationGrid() {
   return (
     <section className="py-16 px-6 sm:px-10 bg-bg-card-dark/40">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-2xl font-bold text-center mb-10">
+        <h2 className="text-xl font-bold text-center mb-10">
           How We Source & Verify Information
         </h2>
 
