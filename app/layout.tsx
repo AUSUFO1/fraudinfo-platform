@@ -11,7 +11,6 @@ const poppins = Poppins({
   display: 'swap',
 });
 
-// Viewport configuration
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
@@ -35,6 +34,7 @@ export const metadata: Metadata = {
     'internet safety',
   ],
   authors: [{ name: 'FraudInfo' }],
+
   openGraph: {
     title: 'FraudInfo — Global Fraud Prevention Platform',
     description:

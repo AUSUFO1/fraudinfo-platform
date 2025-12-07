@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState } from 'react';
 import { CheckCircle2, Circle, AlertCircle } from 'lucide-react';
 import { PREPARATION_CHECKLIST } from '@/lib/fraud-types';
@@ -87,29 +88,29 @@ export default function PreparationChecklist({ onComplete }: PreparationChecklis
 
                 {/* Icon + Checkbox */}
                 <div className="flex items-center gap-3 shrink-0">
-                  <span className="text-2xl text-text-primary">
+                  <span className="text-xl text-text-primary">
                     {item.icon}
                   </span>
 
                   {isChecked ? (
-                    <CheckCircle2 className="w-6 h-6 text-brand-red" />
+                    <CheckCircle2 className="w-5 h-5 text-brand-red" />
                   ) : (
-                    <Circle className="w-6 h-6 text-text-secondary" />
+                    <Circle className="w-5 h-5 text-text-secondary" />
                   )}
                 </div>
 
                 {/* Content */}
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-1">
-                    <h3 className="font-semibold text-text-primary">
+                    <h3 className="font-semibold text-sm text-text-primary">
                       {item.title}
                     </h3>
                     {item.required && (
-                      <span className="text-brand-red text-sm">*</span>
+                      <span className="text-brand-red text-[10px]">*</span>
                     )}
                   </div>
 
-                  <p className="text-sm text-text-secondary">
+                  <p className="text-xs text-text-secondary">
                     {item.description}
                   </p>
                 </div>
