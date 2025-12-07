@@ -96,4 +96,4 @@ If you encounter any issues or have questions, please file an issue on the GitHu
 
 ---
 
-Built with ❤️ to provide fraud resource and protect communities
+Built to provide fraud resources and protect communities
