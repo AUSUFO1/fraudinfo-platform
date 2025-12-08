@@ -29,7 +29,7 @@ export default function HeroSearch() {
         onChange={(e) => setQuery(e.target.value)}
         className="w-full 
                    pl-10 sm:pl-12 
-                   pr-20 sm:pr-24 
+                   pr-28 sm:pr-24 
                    py-2.5 sm:py-3 
                    rounded-full 
                    bg-white/90 
@@ -48,7 +48,7 @@ export default function HeroSearch() {
         className="absolute 
                    right-5 sm:right-1 
                    top-1/2 -translate-y-1/2 
-                   px-3 sm:px-4 
+                   px-2 sm:px-4 
                    py-1.5 sm:py-2 
                    bg-brand-red 
                    hover:bg-brand-rose 
@@ -56,7 +56,7 @@ export default function HeroSearch() {
                    rounded-full 
                    font-semibold 
                    shadow-md 
-                   text-xs sm:text-sm md:text-base 
+                   text-xs sm:text-xs md:text-base 
                    transition-all duration-300"
       >
         Search

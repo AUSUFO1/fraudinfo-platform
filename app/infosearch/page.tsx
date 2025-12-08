@@ -73,8 +73,8 @@ function SearchContent() {
     /* MAIN CONTAINER - Responsive padding for mobile/tablet/desktop */
     <div className="min-h-screen bg-bg-dark p-4 sm:p-6 md:p-8 lg:p-12 pt-6 sm:pt-8 md:pt-12">
       
-      {/* QUICK SEARCH SECTION - Responsive spacing and padding */}
-      <div className="max-w-7xl mx-auto mb-6 sm:mb-8 pt-4 sm:pt-6">
+      {/* QUICK SEARCH SECTION -  spacing and padding */}
+      <div className="max-w-7xl mx-auto mb-6 sm:mb-8 pt-10 sm:pt-12">
         <h2 className="text-xl sm:text-2xl font-bold text-text-primary mb-3 sm:mb-4 text-center">
           Quick Search
         </h2>
