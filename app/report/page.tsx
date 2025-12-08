@@ -234,9 +234,9 @@ const ReportFraudPage = () => {
           ) : (
             <button
               onClick={() => router.push('/')}
-              className="flex items-center gap-2 px-6 py-3 rounded-lg font-medium bg-brand-red text-text-primary hover:bg-brand-rose transition-all"
+              className="flex items-center gap-2 px-4 py-3 rounded-lg font-medium bg-brand-red text-text-primary hover:bg-brand-rose transition-all"
             >
-              <CheckCircle className="w-5 h-5" />
+              <CheckCircle className="w-4 h-4" />
               Complete Report
             </button>
           )}

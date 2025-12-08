@@ -2,23 +2,28 @@
 
 // Display recommended agencies with match reasons
 
-import React from 'react';
-import { AgencyRecommendation } from '@/lib/report-utils';
-import { ExternalLink, Phone, Mail, Globe, CheckCircle, AlertCircle, Clock } from 'lucide-react';
+import React, { useEffect } from "react";
+import { AgencyRecommendation } from "@/lib/report-utils";
+import { ExternalLink, Phone, Mail, Globe, CheckCircle, AlertCircle, Clock } from "lucide-react";
 
 interface AgencyRecommendationsProps {
   recommendations: AgencyRecommendation[];
   fraudTypeId?: string;
 }
 
-export default function AgencyRecommendations({ 
+export default function AgencyRecommendations({
   recommendations,
-  fraudTypeId 
+  fraudTypeId,
 }: AgencyRecommendationsProps) {
+  
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
 
   if (recommendations.length === 0) {
     return (
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6">
         <div className="bg-bg-card-dark rounded-xl p-12 text-center border border-border-dark">
           <AlertCircle className="w-16 h-16 text-brand-red mx-auto mb-4" />
           <h3 className="text-xl font-semibold text-text-primary mb-2">
@@ -39,14 +44,14 @@ export default function AgencyRecommendations({
   }
 
   return (
-    <div className="max-w-5xl mx-auto">
+    <div className="max-w-5xl mx-auto px-4 sm:px-6">
 
       {/* Header */}
       <div className="text-center mb-8">
-        <h2 className="text-xl font-bold text-text-primary mb-3">
+        <h2 className="text-lg sm:text-xl font-bold text-text-primary mb-3">
           Recommended Agencies
         </h2>
-        <p className="text-text-secondary text-lg">
+        <p className="text-text-secondary text-sm sm:text-base">
           Based on your fraud type and location, we recommend reporting to these agencies
         </p>
       </div>
@@ -57,7 +62,7 @@ export default function AgencyRecommendations({
           <Clock className="w-5 h-5 text-brand-red shrink-0 mt-0.5" />
           <div>
             <p className="text-text-primary font-semibold mb-1">Time Sensitive</p>
-            <p className="text-text-secondary text-sm">
+            <p className="text-text-secondary text-sm sm:text-base">
               Report as soon as possible. Quick reporting improves chances of investigation and recovery.
             </p>
           </div>
@@ -93,14 +98,12 @@ export default function AgencyRecommendations({
 
                 {/* Agency Info */}
                 <div className="flex-1">
-                  <div className="flex items-start justify-between mb-3">
+                  <div className="flex items-start justify-between mb-3 flex-wrap gap-2">
                     <div>
                       <h3 className="text-xl font-bold text-text-primary mb-1">
                         {agency.shortName}
                       </h3>
-                      <p className="text-sm text-text-secondary">
-                        {agency.name}
-                      </p>
+                      <p className="text-sm text-text-secondary">{agency.name}</p>
                     </div>
 
                     {agency.verified && (
@@ -110,20 +113,20 @@ export default function AgencyRecommendations({
                     )}
                   </div>
 
-                  <p className="text-text-secondary text-sm mb-4">
+                  <p className="text-text-secondary text-sm sm:text-base mb-4">
                     {agency.description}
                   </p>
 
                   {/* Match Reasons */}
                   <div className="mb-4">
-                    <p className="text-xs font-semibold text-text-secondary mb-2">
+                    <p className="text-xs sm:text-sm font-semibold text-text-secondary mb-2">
                       WHY RECOMMENDED:
                     </p>
                     <div className="flex flex-wrap gap-2">
                       {matchReasons.map((reason, idx) => (
                         <span
                           key={idx}
-                          className="inline-flex items-center gap-1 px-2 py-1 bg-bg-dark text-brand-red text-xs rounded-full border border-brand-red"
+                          className="inline-flex items-center gap-1 px-2 py-1 bg-bg-dark text-brand-red text-xs sm:text-sm rounded-full border border-brand-red"
                         >
                           <CheckCircle className="w-3 h-3" />
                           {reason}
@@ -134,14 +137,14 @@ export default function AgencyRecommendations({
 
                   {/* Specialties */}
                   <div className="mb-4">
-                    <p className="text-xs font-semibold text-text-secondary mb-2">
+                    <p className="text-xs sm:text-sm font-semibold text-text-secondary mb-2">
                       SPECIALTIES:
                     </p>
                     <div className="flex flex-wrap gap-2">
                       {agency.specialties.slice(0, 4).map(specialty => (
                         <span
                           key={specialty}
-                          className="px-2 py-1 bg-bg-dark text-text-secondary text-xs rounded border border-border-dark"
+                          className="px-2 py-1 bg-bg-dark text-text-secondary text-xs sm:text-sm rounded border border-border-dark"
                         >
                           {specialty}
                         </span>
@@ -153,7 +156,7 @@ export default function AgencyRecommendations({
                 {/* Contact Actions */}
                 <div className="md:w-64 shrink-0">
                   <div className="bg-bg-dark rounded-lg p-4 space-y-3 border border-border-dark">
-                    <p className="text-xs font-semibold text-text-secondary mb-2">
+                    <p className="text-xs sm:text-sm font-semibold text-text-secondary mb-2">
                       CONTACT OPTIONS:
                     </p>
 
@@ -162,7 +165,7 @@ export default function AgencyRecommendations({
                         href={agency.website}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-2 w-full px-4 py-2.5 bg-brand-red hover:bg-brand-rose text-text-primary rounded-lg text-sm font-semibold transition-colors"
+                        className="flex items-center gap-2 w-full px-4 py-2.5 bg-brand-red hover:bg-brand-rose text-text-primary rounded-lg text-sm sm:text-base font-semibold transition-colors"
                       >
                         <Globe className="w-4 h-4" />
                         Visit Website
@@ -173,7 +176,7 @@ export default function AgencyRecommendations({
                     {agency.phone && (
                       <a
                         href={`tel:${agency.phone}`}
-                        className="flex items-center gap-2 w-full px-4 py-2.5 bg-bg-card-dark hover:bg-bg-dark text-text-primary border border-border-dark rounded-lg text-sm font-semibold transition-all"
+                        className="flex items-center gap-2 w-full px-4 py-2.5 bg-bg-card-dark hover:bg-bg-dark text-text-primary border border-border-dark rounded-lg text-sm sm:text-base font-semibold transition-all"
                       >
                         <Phone className="w-4 h-4" />
                         {agency.phone}
@@ -183,7 +186,7 @@ export default function AgencyRecommendations({
                     {agency.email && (
                       <a
                         href={`mailto:${agency.email}`}
-                        className="flex items-center gap-2 w-full px-4 py-2.5 bg-bg-card-dark hover:bg-bg-dark text-text-primary border border-border-dark rounded-lg text-sm font-semibold transition-all"
+                        className="flex items-center gap-2 w-full px-4 py-2.5 bg-bg-card-dark hover:bg-bg-dark text-text-primary border border-border-dark rounded-lg text-sm sm:text-base font-semibold transition-all"
                       >
                         <Mail className="w-4 h-4" />
                         Send Email
@@ -192,7 +195,7 @@ export default function AgencyRecommendations({
 
                     {agency.emergencyAvailable && (
                       <div className="pt-3 border-t border-border-dark">
-                        <p className="text-brand-red text-xs font-semibold flex items-center gap-1">
+                        <p className="text-brand-red text-xs sm:text-sm font-semibold flex items-center gap-1">
                           <Clock className="w-3 h-3" />
                           24/7 Available
                         </p>
@@ -210,12 +213,12 @@ export default function AgencyRecommendations({
       {/* Additional Help */}
       <div className="bg-bg-card-dark border border-border-dark rounded-lg p-6 text-center">
         <h3 className="font-semibold text-text-primary mb-2">Need More Options?</h3>
-        <p className="text-text-secondary text-sm mb-4">
+        <p className="text-text-secondary text-sm sm:text-base mb-4">
           Browse our complete directory of fraud reporting agencies worldwide
         </p>
         <button
           onClick={() => window.location.href = '/infosearch'}
-          className="px-6 py-2 bg-bg-dark hover:bg-bg-card-dark text-text-primary border border-border-dark rounded-lg font-semibold transition-colors"
+          className="px-4 py-2 bg-bg-dark hover:bg-bg-card-dark text-text-primary border border-border-dark rounded-lg font-semibold transition-colors"
         >
           Browse All Agencies
         </button>
