@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useMemo, useCallback } from "react";
+import React, { useState, useMemo, useCallback, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { X } from "lucide-react";
 
@@ -11,7 +11,8 @@ import { agencies, fraudResources } from "@/lib/fraud-data";
 import { performSearch, hasActiveFilters } from "@/lib/search.utils";
 import { SearchFilters as SearchFiltersType, SearchResults as SearchResultsType } from "@/types/fraud.types";
 
-export default function InfoSearchPage() {
+/* SEARCH CONTENT COMPONENT - Handles the actual search logic */
+function SearchContent() {
   const searchParams = useSearchParams();
   const initialQuery = searchParams.get("query") || "";
 
@@ -84,7 +85,7 @@ export default function InfoSearchPage() {
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-4 sm:gap-6 md:gap-8">
         
         {/* FILTERS SIDEBAR - Full width mobile, fixed width desktop */}
-        <div className="w-full md:w-64 md:flex-shrink-0">
+        <div className="w-full md:w-64 md:shrink-0">
           <SearchFilters
             filters={filters}
             onFilterChange={updateFilter}
@@ -181,5 +182,18 @@ export default function InfoSearchPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+/* MAIN PAGE COMPONENT - Wraps SearchContent in Suspense boundary */
+export default function InfoSearchPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-bg-dark p-4 sm:p-6 md:p-8 lg:p-12 flex items-center justify-center">
+        <div className="text-text-primary text-lg">Loading search...</div>
+      </div>
+    }>
+      <SearchContent />
+    </Suspense>
   );
 }
