@@ -8,12 +8,12 @@ export interface RSSItem {
 }
 
 /*
- Fetch trending scam/fraud articles using GNews.io (Provider 2)
+ Fetch trending scam/fraud articles using GNews.io 
  All errors are FRIENDLY and do NOT leak technical details.
 */
 export async function fetchTrendingNewsFromProvider(
   apiKey: string,
-  query = "fraud OR scam OR consumer alert",
+  query = "fraud",
   pageSize = 10
 ): Promise<RSSItem[]> {
   if (!apiKey) {

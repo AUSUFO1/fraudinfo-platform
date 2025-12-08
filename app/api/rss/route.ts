@@ -3,11 +3,12 @@ import { fetchTrendingNewsFromProvider } from '../../../lib/rss-parser';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
+export const fetchCache = "force-no-store"; 
 
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
-    const q = searchParams.get('q') || 'fraud OR scam OR consumer alert';
+    const q = searchParams.get('q') || 'fraud';
     const pageSizeParam = parseInt(searchParams.get('pageSize') || '10', 10);
     const pageSize = Number.isNaN(pageSizeParam) ? 10 : Math.min(50, pageSizeParam);
 

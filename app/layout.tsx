@@ -68,7 +68,7 @@ export const metadata: Metadata = {
 function ClientBody({ children }: { children: React.ReactNode }) {
   return (
     <body
-      className={`${poppins.variable} font-poppins antialiased pt-5 bg-[#0F0F11] text-white`}
+      className={`${poppins.variable} font-poppins antialiased bg-[#0F0F11] text-white`}
     >
       <Header />
       <main className="min-h-screen">{children}</main>

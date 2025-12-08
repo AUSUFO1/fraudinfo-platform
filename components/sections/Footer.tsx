@@ -7,7 +7,6 @@ export default function Footer() {
     <footer className="w-full bg-black border-t border-border-dark">
       <div className="max-w-6xl mx-auto px-6 py-10 flex flex-col items-center gap-4">
         
-        {/* Logo Text Only */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -41,7 +40,7 @@ export default function Footer() {
         </div>
 
         {/* Copyright */}
-        <p className="text-xs text-text-primary mt-2 tracking-wide">
+        <p className="text-xs text-text-primary mt-2 tracking-wide text-center">
           © {new Date().getFullYear()} FraudInfo — Stay Informed. Stay Protected.
         </p>
       </div>

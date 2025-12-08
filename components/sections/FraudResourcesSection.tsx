@@ -56,7 +56,7 @@ const FraudResourcesSection = () => {
             </span>
           </div>
 
-          <h2 className="text-2xl md:text-3xl font-bold mb-4">
+          <h2 className="text-xl md:text-2xl font-bold mb-4">
             <span className="text-white">Your Fraud-Fighting</span>
             <br />
             <span className="text-transparent bg-clip-text bg-linear-to-r from-brand-red to-brand-rose">
@@ -64,7 +64,7 @@ const FraudResourcesSection = () => {
             </span>
           </h2>
 
-          <p className="text-text-secondary text-lg max-w-2xl mx-auto">
+          <p className="text-text-secondary text-sm max-w-2xl mx-auto">
             Verified tools, blogs, and resources from trusted sources to help
             you stay protected
           </p>
@@ -111,7 +111,7 @@ const FraudResourcesSection = () => {
             <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-bg-card-dark mb-4">
               <Grid className="w-8 h-8 text-text-secondary" />
             </div>
-            <h3 className="text-xl font-semibold text-white mb-2">
+            <h3 className="text-lg font-semibold text-white mb-2">
               Select a Category
             </h3>
             <p className="text-text-secondary">
