@@ -69,18 +69,22 @@ export default function InfoSearchPage() {
   }, [query, filters]);
 
   return (
-    <div className="min-h-screen bg-bg-dark p-6 md:p-12">
-      {/* Quick Search Terms */}
-      <div className="max-w-7xl mx-auto mb-8">
-        <h2 className="text-2xl font-bold text-text-primary mb-4 text-center">
+    /* MAIN CONTAINER - Responsive padding for mobile/tablet/desktop */
+    <div className="min-h-screen bg-bg-dark p-4 sm:p-6 md:p-8 lg:p-12 pt-6 sm:pt-8 md:pt-12">
+      
+      {/* QUICK SEARCH SECTION - Responsive spacing and padding */}
+      <div className="max-w-7xl mx-auto mb-6 sm:mb-8 pt-4 sm:pt-6">
+        <h2 className="text-xl sm:text-2xl font-bold text-text-primary mb-3 sm:mb-4 text-center">
           Quick Search
         </h2>
         <QuickSearchTerms onTermClick={setQuery} />
       </div>
 
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-8">
-        {/* Filters Sidebar */}
-        <div className="md:w-64">
+      {/* MAIN CONTENT GRID - Responsive layout: stacked mobile, side-by-side desktop */}
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-4 sm:gap-6 md:gap-8">
+        
+        {/* FILTERS SIDEBAR - Full width mobile, fixed width desktop */}
+        <div className="w-full md:w-64 md:flex-shrink-0">
           <SearchFilters
             filters={filters}
             onFilterChange={updateFilter}
@@ -89,21 +93,25 @@ export default function InfoSearchPage() {
           />
         </div>
 
-        {/* Search Results */}
-        <div className="flex-1">
-          {/* Active Search/Filter Bar */}
+        {/* SEARCH RESULTS - Flexible width on desktop */}
+        <div className="flex-1 min-w-0">
+          
+          {/* ACTIVE FILTERS BAR - Responsive padding and text sizing */}
           {(query || hasActiveFilters(filters)) && (
-            <div className="mb-4 p-4 bg-bg-card-dark rounded-lg border border-gray-800">
-              <div className="flex items-center justify-between mb-2">
-                <p className="text-text-secondary text-sm">
+            <div className="mb-3 sm:mb-4 p-3 sm:p-4 bg-bg-card-dark rounded-lg border border-gray-800">
+              
+              {/* RESULTS COUNT - Responsive text size and layout */}
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0 mb-2 sm:mb-2">
+                <p className="text-text-secondary text-xs sm:text-sm">
                   Found <span className="text-brand-red font-semibold">{results.total}</span> results
                   {' '}({results.agencies.length} agencies, {results.resources.length} resources)
                 </p>
                 
+                {/* CLEAR ALL BUTTON - Responsive sizing */}
                 {(query || hasActiveFilters(filters)) && (
                   <button
                     onClick={clearAll}
-                    className="text-xs text-brand-red hover:text-brand-rose transition-colors flex items-center gap-1"
+                    className="text-xs sm:text-xs text-brand-red hover:text-brand-rose transition-colors flex items-center gap-1 self-start sm:self-auto"
                   >
                     <X className="w-3 h-3" />
                     Clear All
@@ -111,11 +119,13 @@ export default function InfoSearchPage() {
                 )}
               </div>
               
-              {/* Active Filters Display */}
-              <div className="flex flex-wrap gap-2">
+              {/* ACTIVE FILTER TAGS - Responsive wrapping and sizing */}
+              <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                
+                {/* SEARCH QUERY TAG */}
                 {query && (
-                  <span className="inline-flex items-center gap-1 px-3 py-1 bg-brand-red/20 text-brand-red text-xs rounded-full">
-                    Search: "{query}"
+                  <span className="inline-flex items-center gap-1 px-2 sm:px-3 py-1 bg-brand-red/20 text-brand-red text-xs rounded-full">
+                    Search: "{query.length > 20 ? query.substring(0, 20) + '...' : query}"
                     <button
                       onClick={clearSearch}
                       className="hover:bg-brand-red/30 rounded-full p-0.5 transition-colors"
@@ -125,8 +135,9 @@ export default function InfoSearchPage() {
                   </span>
                 )}
                 
+                {/* CATEGORY FILTER TAG */}
                 {filters.category !== 'all' && (
-                  <span className="inline-flex items-center gap-1 px-3 py-1 bg-brand-rose/20 text-brand-rose text-xs rounded-full">
+                  <span className="inline-flex items-center gap-1 px-2 sm:px-3 py-1 bg-brand-rose/20 text-brand-rose text-xs rounded-full">
                     Category: {filters.category}
                     <button
                       onClick={() => updateFilter('category', 'all')}
@@ -137,8 +148,9 @@ export default function InfoSearchPage() {
                   </span>
                 )}
                 
+                {/* REGION FILTER TAG */}
                 {filters.region !== 'all' && (
-                  <span className="inline-flex items-center gap-1 px-3 py-1 bg-brand-rose/20 text-brand-rose text-xs rounded-full">
+                  <span className="inline-flex items-center gap-1 px-2 sm:px-3 py-1 bg-brand-rose/20 text-brand-rose text-xs rounded-full">
                     Region: {filters.region}
                     <button
                       onClick={() => updateFilter('region', 'all')}
@@ -149,8 +161,9 @@ export default function InfoSearchPage() {
                   </span>
                 )}
                 
+                {/* RESOURCE TYPE FILTER TAG */}
                 {filters.resourceType !== 'all' && (
-                  <span className="inline-flex items-center gap-1 px-3 py-1 bg-brand-rose/20 text-brand-rose text-xs rounded-full">
+                  <span className="inline-flex items-center gap-1 px-2 sm:px-3 py-1 bg-brand-rose/20 text-brand-rose text-xs rounded-full">
                     Resource: {filters.resourceType}
                     <button
                       onClick={() => updateFilter('resourceType', 'all')}

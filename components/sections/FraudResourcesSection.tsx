@@ -56,7 +56,7 @@ const FraudResourcesSection = () => {
             </span>
           </div>
 
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+          <h2 className="text-2xl md:text-3xl font-bold mb-4">
             <span className="text-white">Your Fraud-Fighting</span>
             <br />
             <span className="text-transparent bg-clip-text bg-linear-to-r from-brand-red to-brand-rose">

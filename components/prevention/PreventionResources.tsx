@@ -1,4 +1,3 @@
-// components/prevention/PreventionResources.tsx
 import Link from "next/link";
 
 const resources = [
@@ -79,7 +78,6 @@ export default function PreventionResources() {
               ))}
             </div>
           </div>
-
           {/* Right Column - YouTube Channels */}
           <div>
             <h3 className="text-xl font-semibold mb-4 text-brand-rose">Educational YouTube Channels</h3>

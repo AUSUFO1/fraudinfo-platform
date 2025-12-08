@@ -11,7 +11,7 @@ export default function Hero() {
     <section className="relative h-[500px] bg-linear-to-b from-bg-dark to-bg-card-dark flex flex-col justify-center items-center text-center px-4">
 
       {/* Tagline */}
-      <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold leading-tight text-text-primary">
+      <h1 className="text-xl md:text-2xl lg:text-3xl font-bold leading-tight text-text-primary">
         Protect Yourself Against{" "}
         <span className="text-brand-red">Online Fraud</span>
       </h1>
