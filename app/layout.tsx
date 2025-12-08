@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Analytics } from "@vercel/analytics/next"
+import { Analytics } from '@vercel/analytics/next';
 import { Poppins } from 'next/font/google';
 import Header from '@/components/sections/Header';
 import Footer from '@/components/sections/Footer';
@@ -35,7 +35,6 @@ export const metadata: Metadata = {
     'internet safety',
   ],
   authors: [{ name: 'FraudInfo' }],
-
   openGraph: {
     title: 'FraudInfo — Global Fraud Prevention Platform',
     description:
@@ -74,15 +73,12 @@ function ClientBody({ children }: { children: React.ReactNode }) {
       <Header />
       <main className="min-h-screen">{children}</main>
       <Footer />
+      <Analytics />
     </body>
   );
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className="scroll-smooth">
       <ClientBody>{children}</ClientBody>
