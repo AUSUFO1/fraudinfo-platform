@@ -1,48 +1,26 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import Logo from "../Header/Logo";
+import Link from "next/link";
 import DesktopNav from "../Header/DesktopNav";
+import Logo from "../Header/Logo";
 import MobileNav from "../Header/MobileNav";
 
 export default function Header() {
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 10);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
   return (
-    <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.45 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? "bg-bg-dark/95 backdrop-blur-md shadow-lg"
-          : "bg-bg-dark shadow"
-      } border-b border-white/10`}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative flex items-center h-16 md:h-20">
-          {/* Logo */}
-          <Logo />
-
-          {/* Desktop Navigation */}
+    <header className="sticky top-0 z-50 border-b border-white/10 bg-[rgba(11,18,32,0.86)] backdrop-blur-xl">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
+        <Logo />
+        <div className="flex items-center gap-3">
           <DesktopNav />
-
-          <div className="ml-auto flex items-center gap-2">
-            <div className="hidden md:flex items-center gap-2">
-            </div>
-
-            {/* Mobile Menu */}
-            <MobileNav />
-          </div>
+          <Link
+            href="/report"
+            className="hidden border-b border-transparent pb-1 text-sm font-semibold text-text-primary transition-colors hover:border-white/40 lg:inline-flex"
+          >
+            Report fraud
+          </Link>
+          <MobileNav />
         </div>
       </div>
-    </motion.nav>
+    </header>
   );
 }

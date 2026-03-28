@@ -1,7 +1,13 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { TrendingUp, AlertCircle, Clock, ExternalLink, Loader2, RefreshCw } from "lucide-react";
+import { useEffect, useState } from "react";
+import {
+  AlertCircle,
+  ExternalLink,
+  Loader2,
+  RefreshCw,
+  TrendingUp,
+} from "lucide-react";
 
 interface RSSItem {
   id: string;
@@ -12,7 +18,7 @@ interface RSSItem {
   source: string;
 }
 
-const TrendingScamsCard = () => {
+export default function TrendingScamsCard() {
   const [scams, setScams] = useState<RSSItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -20,23 +26,13 @@ const TrendingScamsCard = () => {
   const formatDate = (dateString: string) => {
     try {
       const date = new Date(dateString);
-      const now = new Date();
-      const diffMs = now.getTime() - date.getTime();
-      const diffMins = Math.floor(diffMs / 60000);
-      const diffHours = Math.floor(diffMs / 3600000);
-      const diffDays = Math.floor(diffMs / 86400000);
 
-      if (diffMins < 60) {
-        return `${diffMins} mins ago`;
-      } else if (diffHours < 24) {
-        return `${diffHours} ${diffHours === 1 ? 'hour' : 'hours'} ago`;
-      } else if (diffDays < 7) {
-        return `${diffDays} ${diffDays === 1 ? 'day' : 'days'} ago`;
-      } else {
-        return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-      }
+      return date.toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+      });
     } catch {
-      return 'Recently';
+      return "Recent";
     }
   };
 
@@ -45,25 +41,24 @@ const TrendingScamsCard = () => {
       setLoading(true);
       setError(null);
 
-      const response = await fetch('/api/rss', { cache: 'no-store' });
+      const response = await fetch("/api/rss", { cache: "no-store" });
 
       if (!response.ok) {
         const data = await response.json().catch(() => ({}));
-        const userMessage = data?.userMessage || 'Unable to load news feed';
-        throw new Error(userMessage);
+        throw new Error(data?.userMessage || "Unable to load news feed");
       }
 
       const data = await response.json();
 
-      if (data.success && data.items && data.items.length > 0) {
-        setScams(data.items.slice(0, 5));
-        setError(null);
+      if (data.success && data.items?.length) {
+        setScams(data.items.slice(0, 4));
       } else {
-        throw new Error(data?.userMessage || 'No news available right now');
+        throw new Error(data?.userMessage || "No news available right now");
       }
-    } catch (err: any) {
-      console.error('Failed to load trending scams:', err);
-      setError(err?.message || 'Unable to load news feed');
+    } catch (err: unknown) {
+      const message =
+        err instanceof Error ? err.message : "Unable to load news feed";
+      setError(message);
       setScams([]);
     } finally {
       setLoading(false);
@@ -72,97 +67,81 @@ const TrendingScamsCard = () => {
 
   useEffect(() => {
     loadFeed();
-    const interval = setInterval(loadFeed, 600_000);
-    return () => clearInterval(interval);
   }, []);
 
-  const getSeverityColor = (index: number) => {
-    if (index % 3 === 0) return "text-brand-red";
-    if (index % 3 === 1) return "text-yellow-500";
-    return "text-orange-500";
-  };
-
   return (
-    <div className="bg-bg-card-dark border border-border-dark rounded-lg p-6 text-text-primary transition-shadow duration-300 hover:shadow-[0_10px_25px_rgba(0,0,0,0.5)] group cursor-pointer">
-      <div className="flex items-center gap-3 mb-6">
-        <div className="p-3 bg-brand-red/10 rounded-lg">
-          <TrendingUp className="w-6 h-6 text-brand-red" />
+    <article className="section-frame rounded-[1.75rem] p-6">
+      <div className="flex items-start justify-between gap-4">
+        <div className="flex items-start gap-4">
+          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[var(--accent-soft)] text-brand-red">
+            <TrendingUp className="h-5 w-5" />
+          </span>
+          <div>
+            <p className="text-sm font-medium text-text-secondary">Live feed</p>
+            <h3 className="mt-1 text-2xl font-semibold tracking-[-0.04em] text-text-primary">
+              Trending scams
+            </h3>
+          </div>
         </div>
-        <div className="flex-1">
-          <h3 className="text-xl font-bold text-text-primary">Trending Scams</h3>
-          <p className="text-xs text-text-secondary">Live news feed</p>
-        </div>
-        {loading && <Loader2 className="w-5 h-5 text-brand-red animate-spin" />}
+        {loading ? (
+          <Loader2 className="h-5 w-5 animate-spin text-text-secondary" />
+        ) : null}
       </div>
 
-      <div className="space-y-4 max-h-80 overflow-y-auto pr-2 custom-scrollbar">
+      <div className="mt-6 space-y-3">
         {loading && scams.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-8 text-text-secondary">
-            <Loader2 className="w-8 h-8 mb-3 animate-spin" />
-            <p className="text-sm">Loading latest scams...</p>
+          <div className="rounded-[1.5rem] border border-white/10 bg-white/5 px-5 py-8 text-sm text-text-secondary">
+            Loading latest scam reports.
           </div>
         ) : error ? (
-          <div className="flex flex-col items-center justify-center py-8 text-center">
-            <AlertCircle className="w-8 h-8 mb-3 text-yellow-500" />
-            <p className="text-sm text-text-secondary mb-1">
-              Unable to load news feed
-            </p>
-            <p className="text-xs text-text-muted mb-4">
-              Try refreshing in a moment
-            </p>
+          <div className="rounded-[1.5rem] border border-white/10 bg-white/5 p-5">
+            <div className="flex items-start gap-3">
+              <AlertCircle className="mt-0.5 h-4 w-4 text-amber-300" />
+              <div>
+                <p className="text-sm font-medium text-text-primary">
+                  Feed temporarily unavailable
+                </p>
+                <p className="mt-1 text-sm leading-6 text-text-secondary">
+                  {error}
+                </p>
+              </div>
+            </div>
             <button
+              type="button"
               onClick={loadFeed}
               disabled={loading}
-              className="flex items-center gap-2 px-4 py-2 bg-brand-red hover:bg-brand-rose disabled:bg-text-muted disabled:cursor-not-allowed rounded-lg text-sm font-medium transition-colors"
+              className="mt-4 inline-flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-sm text-text-primary transition-colors hover:border-white/20 disabled:opacity-60"
             >
-              <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
-              Refresh
+              <RefreshCw className={`h-4 w-4 ${loading ? "animate-spin" : ""}`} />
+              Retry
             </button>
           </div>
-        ) : scams.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-8 text-text-secondary">
-            <AlertCircle className="w-8 h-8 mb-3" />
-            <p className="text-sm">No recent scams found</p>
-          </div>
         ) : (
-          scams.map((scam, index) => (
+          scams.map((scam) => (
             <a
               key={scam.id}
               href={scam.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="block p-4 bg-bg-dark rounded-lg border border-border-dark hover:border-brand-red transition-all duration-300"
+              className="block rounded-[1.5rem] border border-white/10 bg-white/5 p-5 transition-colors hover:border-white/20"
             >
-              <div className="flex items-start justify-between mb-2">
-                <h4 className="font-semibold text-sm line-clamp-2 flex-1 pr-2">{scam.title}</h4>
-                <AlertCircle className={`w-4 h-4 ${getSeverityColor(index)} shrink-0`} />
+              <div className="flex items-start justify-between gap-3">
+                <p className="text-sm font-medium leading-6 text-text-primary">
+                  {scam.title}
+                </p>
+                <ExternalLink className="mt-1 h-4 w-4 shrink-0 text-text-tertiary" />
               </div>
-              <p className="text-xs text-text-secondary mb-2 line-clamp-2">{scam.description}</p>
-              <div className="flex items-center justify-between text-xs text-text-secondary">
-                <div className="flex items-center gap-2">
-                  <Clock className="w-3 h-3" />
-                  <span>{formatDate(scam.pubDate)}</span>
-                </div>
-                <ExternalLink className="w-3 h-3" />
+              <p className="mt-2 text-sm leading-6 text-text-secondary">
+                {scam.description}
+              </p>
+              <div className="mt-4 flex items-center justify-between text-xs uppercase tracking-[0.08em] text-text-tertiary">
+                <span>{scam.source}</span>
+                <span>{formatDate(scam.pubDate)}</span>
               </div>
             </a>
           ))
         )}
       </div>
-
-      <div className="mt-6 pt-4 border-t border-border-dark">
-        <a
-          href="https://news.google.com/search?q=scam+fraud"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="w-full flex items-center justify-center gap-2 text-sm font-semibold text-brand-red hover:text-brand-rose transition-colors"
-        >
-          View All Trends
-          <ExternalLink className="w-4 h-4" />
-        </a>
-      </div>
-    </div>
+    </article>
   );
-};
-
-export default TrendingScamsCard;
+}

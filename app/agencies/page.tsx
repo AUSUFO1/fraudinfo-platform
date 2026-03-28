@@ -22,10 +22,11 @@ const AgenciesPage = () => {
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
-            Anti-Fraud Agencies
+            Verified Reporting Agencies
           </h2>
           <p className="text-text-secondary text-lg max-w-2xl mx-auto">
-            Find verified agencies worldwide to report fraud, cybercrime, and scams.
+            Search trusted agencies by name, mission, and fraud focus to find
+            the right place to report.
           </p>
         </div>
 

@@ -1,28 +1,22 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
-import { motion } from "framer-motion";
+import { ShieldCheck } from "lucide-react";
 
 export default function Logo() {
   return (
-    <div className="shrink-0">
-      <Link href="/">
-        <motion.div
-          className="cursor-pointer"
-          whileHover={{ scale: 1.05, rotate: 3 }}
-          transition={{ type: "spring", stiffness: 350, damping: 20 }}
-        >
-          <Image
-            src="/images/logo.png"
-            alt="FraudInfo Logo"
-            width={150}
-            height={40}
-            priority
-            className="w-32 h-auto md:w-40"
-          />
-        </motion.div>
-      </Link>
-    </div>
+    <Link href="/" className="flex items-center gap-3">
+      <span className="flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-white/5">
+        <ShieldCheck className="h-5 w-5 text-brand-red" />
+      </span>
+      <span className="flex flex-col">
+        <span className="font-[var(--font-syne)] text-lg font-semibold tracking-[-0.04em] text-text-primary">
+          FraudInfo
+        </span>
+        <span className="text-xs text-text-secondary">
+          Fraud response workspace
+        </span>
+      </span>
+    </Link>
   );
 }

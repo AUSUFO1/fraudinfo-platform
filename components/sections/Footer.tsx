@@ -1,48 +1,36 @@
-"use client";
-
-import { motion } from "framer-motion";
+import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="w-full bg-black border-t border-border-dark">
-      <div className="max-w-6xl mx-auto px-6 py-10 flex flex-col items-center gap-4">
-        
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="flex items-center gap-2"
-        >
-          <span className="text-text-primary font-semibold tracking-wide text-lg">
+    <footer className="border-t border-white/10">
+      <div className="mx-auto flex max-w-7xl flex-col gap-8 px-4 py-10 sm:px-6 lg:flex-row lg:items-end lg:justify-between lg:px-8">
+        <div className="max-w-md">
+          <p className="font-[var(--font-syne)] text-2xl font-semibold tracking-[-0.04em] text-text-primary">
             FraudInfo
-          </span>
-        </motion.div>
+          </p>
+          <p className="mt-3 text-sm leading-6 text-text-secondary">
+            Clean fraud intelligence for people who need to verify a threat,
+            report it quickly, and move forward with confidence.
+          </p>
+        </div>
 
-        {/* Links */}
-        <div className="flex gap-6 text-sm text-text-primary">
-          <a
-            href="/privacy"
-            className="hover:text-brand-rose transition-colors"
-          >
+        <div className="flex flex-col gap-4 text-sm text-text-secondary sm:flex-row sm:items-center sm:gap-6">
+          <Link href="/privacy" className="hover:text-text-primary">
             Privacy
-          </a>
-          <a
-            href="/terms"
-            className="hover:text-brand-rose transition-colors"
-          >
+          </Link>
+          <Link href="/terms" className="hover:text-text-primary">
             Terms
-          </a>
+          </Link>
           <a
             href="mailto:verifyfraud01@gmail.com"
-            className="hover:text-brand-rose transition-colors"
+            className="hover:text-text-primary"
           >
             Contact
           </a>
+          <span className="text-text-tertiary">
+            © {new Date().getFullYear()} FraudInfo
+          </span>
         </div>
-
-        {/* Copyright */}
-        <p className="text-xs text-text-primary mt-2 tracking-wide text-center">
-          © {new Date().getFullYear()} FraudInfo — Stay Informed. Stay Protected.
-        </p>
       </div>
     </footer>
   );

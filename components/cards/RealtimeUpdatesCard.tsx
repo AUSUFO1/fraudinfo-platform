@@ -1,7 +1,12 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { Bolt, Clock, ExternalLink, AlertCircle, Loader2 } from "lucide-react";
+import { useEffect, useState } from "react";
+import {
+  AlertCircle,
+  Bolt,
+  ExternalLink,
+  Loader2,
+} from "lucide-react";
 
 interface AlertItem {
   id: string;
@@ -22,24 +27,27 @@ export default function RealTimeUpdatesCard() {
       setLoading(true);
       setError(null);
 
-      const res = await fetch("/api/alerts?pageSize=10", { cache: "no-store" });
+      const response = await fetch("/api/alerts?pageSize=10", {
+        cache: "no-store",
+      });
 
-      if (!res.ok) {
-        console.error("API Error Response:", await res.text());
-        throw new Error("Unable to reach alert servers. Please try again later.");
+      if (!response.ok) {
+        throw new Error("Unable to reach alert services.");
       }
 
-      const data = await res.json();
+      const data = await response.json();
 
       if (!data.success) {
-        console.error("API Data Error:", data.error);
-        throw new Error("Unable to fetch alerts at the moment.");
+        throw new Error("Unable to fetch alerts right now.");
       }
 
-      setAlerts(data.items || []);
-    } catch (err: any) {
-      console.error("fetchAlerts error:", err);
-      setError("Unable to load official alerts right now. Please try again later.");
+      setAlerts((data.items || []).slice(0, 4));
+    } catch (err: unknown) {
+      const message =
+        err instanceof Error
+          ? err.message
+          : "Unable to load official alerts right now.";
+      setError(message);
       setAlerts([]);
     } finally {
       setLoading(false);
@@ -48,73 +56,91 @@ export default function RealTimeUpdatesCard() {
 
   useEffect(() => {
     fetchAlerts();
-    const interval = setInterval(fetchAlerts, 2 * 60 * 1000);
-    return () => clearInterval(interval);
   }, []);
 
   const formatDate = (iso: string) => {
     try {
-      const d = new Date(iso);
-      return d.toLocaleString();
+      return new Date(iso).toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+      });
     } catch {
       return iso;
     }
   };
 
   return (
-    <div className="bg-bg-card-dark border border-border-dark rounded-lg p-6 text-text-primary transition-shadow duration-300 hover:shadow-[0_10px_25px_rgba(0,0,0,0.5)] group cursor-pointer">
-      <div className="flex items-center gap-3 mb-6">
-        <div className="p-3 bg-brand-red/10 rounded-lg">
-          <Bolt className="w-6 h-6 text-brand-red" />
+    <article className="section-frame rounded-[1.75rem] p-6">
+      <div className="flex items-start justify-between gap-4">
+        <div className="flex items-start gap-4">
+          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 text-text-primary">
+            <Bolt className="h-5 w-5" />
+          </span>
+          <div>
+            <p className="text-sm font-medium text-text-secondary">
+              Verified signals
+            </p>
+            <h3 className="mt-1 text-2xl font-semibold tracking-[-0.04em] text-text-primary">
+              Official alerts
+            </h3>
+          </div>
         </div>
-        <div className="flex-1">
-          <h3 className="text-xl font-bold text-text-primary">Real-Time Updates</h3>
-          <p className="text-xs text-text-secondary">Multi-agency verified alerts</p>
-        </div>
-        {loading && <Loader2 className="w-5 h-5 text-brand-red animate-spin" />}
+        {loading ? (
+          <Loader2 className="h-5 w-5 animate-spin text-text-secondary" />
+        ) : null}
       </div>
 
-      <div className="space-y-4 max-h-80 overflow-y-auto pr-2 custom-scrollbar">
-        {loading ? (
-          <div className="flex flex-col items-center justify-center py-8 text-text-secondary">
-            <Loader2 className="w-8 h-8 mb-3 animate-spin" />
-            <p className="text-sm">Loading official alerts...</p>
+      <div className="mt-6 space-y-3">
+        {loading && alerts.length === 0 ? (
+          <div className="rounded-[1.5rem] border border-white/10 bg-white/5 px-5 py-8 text-sm text-text-secondary">
+            Loading official alert sources.
           </div>
         ) : error ? (
-          <div className="flex flex-col items-center justify-center py-8 text-text-secondary">
-            <AlertCircle className="w-8 h-8 mb-3 text-yellow-500" />
-            <p className="text-sm text-center">{error}</p>
+          <div className="rounded-[1.5rem] border border-white/10 bg-white/5 p-5">
+            <div className="flex items-start gap-3">
+              <AlertCircle className="mt-0.5 h-4 w-4 text-amber-300" />
+              <div>
+                <p className="text-sm font-medium text-text-primary">
+                  Alerts are temporarily unavailable
+                </p>
+                <p className="mt-1 text-sm leading-6 text-text-secondary">
+                  {error}
+                </p>
+              </div>
+            </div>
           </div>
         ) : alerts.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-8 text-text-secondary">
-            <AlertCircle className="w-8 h-8 mb-3" />
-            <p className="text-sm">No official alerts at the moment</p>
+          <div className="rounded-[1.5rem] border border-white/10 bg-white/5 px-5 py-8 text-sm text-text-secondary">
+            No official alerts are available right now.
           </div>
         ) : (
-          alerts.map((a) => (
+          alerts.map((alert) => (
             <a
-              key={a.id}
-              href={a.link}
+              key={alert.id}
+              href={alert.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="block p-4 bg-bg-dark rounded-lg border border-border-dark hover:border-brand-red transition-all duration-300"
+              className="block rounded-[1.5rem] border border-white/10 bg-white/5 p-5 transition-colors hover:border-white/20"
             >
-              <div className="flex items-start justify-between mb-2">
-                <h4 className="font-semibold text-sm line-clamp-2 flex-1 pr-2">{a.title}</h4>
-                <div className="text-xs text-text-secondary">{a.source}</div>
-              </div>
-              <p className="text-xs text-text-secondary mb-2 line-clamp-2">{a.description}</p>
-              <div className="flex items-center justify-between text-xs text-text-secondary">
-                <div className="flex items-center gap-2">
-                  <Clock className="w-3 h-3" />
-                  <span>{formatDate(a.pubDate)}</span>
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <p className="text-sm font-medium leading-6 text-text-primary">
+                    {alert.title}
+                  </p>
+                  <p className="mt-2 text-sm leading-6 text-text-secondary">
+                    {alert.description}
+                  </p>
                 </div>
-                <ExternalLink className="w-3 h-3" />
+                <ExternalLink className="mt-1 h-4 w-4 shrink-0 text-text-tertiary" />
+              </div>
+              <div className="mt-4 flex items-center justify-between text-xs uppercase tracking-[0.08em] text-text-tertiary">
+                <span>{alert.source}</span>
+                <span>{formatDate(alert.pubDate)}</span>
               </div>
             </a>
           ))
         )}
       </div>
-    </div>
+    </article>
   );
 }

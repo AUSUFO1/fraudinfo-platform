@@ -1,273 +1,355 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { ArrowRight, ArrowLeft, CheckCircle, AlertCircle } from 'lucide-react';
-import PreparationChecklist from '@/components/report/PreparationChecklist';
-import FraudTypeSelector from '@/components/report/FraudTypeSelector';
-import LocationSelector from '@/components/report/LocationSelector';
-import AgencyRecommendations from '@/components/report/AgencyRecommendations';
-import { recommendAgencies, AgencyRecommendation } from '@/lib/report-utils';
+import { useEffect, useMemo, useState } from "react";
+import {
+  Ban,
+  Building2,
+  Briefcase,
+  CreditCard,
+  DollarSign,
+  ExternalLink,
+  Heart,
+  Laptop,
+  Mail,
+  Search,
+  ShieldAlert,
+  ShoppingCart,
+} from "lucide-react";
+import AgencyRecommendations from "@/components/report/AgencyRecommendations";
+import { REGIONS } from "@/lib/fraud-data";
+import { FRAUD_TYPES, PREPARATION_CHECKLIST } from "@/lib/fraud-types";
+import { TRIAGE_QUESTIONS, type TriageQuestion } from "@/lib/product-features";
+import { recommendAgencies } from "@/lib/report-utils";
 
-const ReportFraudPage = () => {
-  const router = useRouter();
+const COUNTRIES_BY_REGION: Record<string, string[]> = {
+  "West Africa": ["Nigeria", "Ghana", "Senegal", "Ivory Coast", "Benin", "Togo"],
+  "North America": ["United States", "Canada", "Mexico"],
+  Europe: ["United Kingdom", "Germany", "France", "Spain", "Italy", "Netherlands"],
+  "East Asia": ["China", "Japan", "South Korea", "Taiwan"],
+  "Southeast Asia": ["Singapore", "Malaysia", "Thailand", "Philippines", "Indonesia", "Vietnam"],
+  "South Asia": ["India", "Pakistan", "Bangladesh", "Sri Lanka"],
+  Oceania: ["Australia", "New Zealand", "Fiji"],
+  "Middle East": ["UAE", "Saudi Arabia", "Qatar", "Israel", "Turkey"],
+};
 
-  const [currentStep, setCurrentStep] = useState(1);
-  const [preparationComplete, setPreparationComplete] = useState(false);
-  const [selectedFraudType, setSelectedFraudType] = useState<string | undefined>(undefined);
-  const [selectedRegion, setSelectedRegion] = useState<string | undefined>(undefined);
-  const [selectedCountry, setSelectedCountry] = useState<string | undefined>(undefined);
-  const [recommendations, setRecommendations] = useState<AgencyRecommendation[]>([]);
+const fraudTypeIcons = {
+  "romance-scam": Heart,
+  "investment-fraud": Search,
+  phishing: Mail,
+  "online-shopping": ShoppingCart,
+  "advance-fee": DollarSign,
+  "tech-support": Laptop,
+  employment: Briefcase,
+  "bank-fraud": Building2,
+} as const;
 
-  const steps = [
-    { number: 1, title: 'Prepare' },
-    { number: 2, title: 'Fraud Type' },
-    { number: 3, title: 'Location' },
-    { number: 4, title: 'Agencies' }
-  ];
+const prepIcons = {
+  "gather-evidence": Search,
+  "transaction-details": CreditCard,
+  "scammer-info": Search,
+  timeline: ShieldAlert,
+  "stop-contact": Ban,
+  "secure-accounts": ShieldAlert,
+} as const;
 
-  useEffect(() => {
-    if (selectedFraudType) {
-      const recs = recommendAgencies({
-        fraudType: selectedFraudType,
-        region: selectedRegion,
-        country: selectedCountry
-      });
-      setRecommendations(recs);
-    }
-  }, [selectedFraudType, selectedRegion, selectedCountry]);
+export default function ReportFraudPage() {
+  const [selectedFraudType, setSelectedFraudType] = useState<string>("");
+  const [selectedRegion, setSelectedRegion] = useState<string>("");
+  const [selectedCountry, setSelectedCountry] = useState<string>("");
+  const [currentQuestionId, setCurrentQuestionId] = useState<string>("entry");
+  const [triageGuidance, setTriageGuidance] = useState<string>("");
+  const [triageTrail, setTriageTrail] = useState<string[]>([]);
 
-  const isStepComplete = (stepNum: number): boolean => {
-    if (stepNum === 1) return preparationComplete;
-    if (stepNum === 2) return selectedFraudType !== undefined;
-    if (stepNum === 3) return selectedRegion !== undefined;
-    return false;
+  const currentQuestion = TRIAGE_QUESTIONS.find(
+    (question) => question.id === currentQuestionId,
+  ) as TriageQuestion | undefined;
+
+  const availableCountries = selectedRegion
+    ? COUNTRIES_BY_REGION[selectedRegion] || []
+    : [];
+
+  const recommendations = useMemo(() => {
+    if (!selectedFraudType) return [];
+
+    return recommendAgencies({
+      fraudType: selectedFraudType,
+      region: selectedRegion || undefined,
+      country: selectedCountry || undefined,
+    });
+  }, [selectedCountry, selectedFraudType, selectedRegion]);
+
+  const essentials = PREPARATION_CHECKLIST.filter((item) => item.required).slice(0, 4);
+
+  const handleTriageAnswer = (
+    question: TriageQuestion,
+    option: TriageQuestion["options"][number],
+  ) => {
+    setTriageTrail((current) => [
+      ...current.filter((entry) => !entry.startsWith(`${question.id}:`)),
+      `${question.id}:${option.label}`,
+    ]);
+
+    if (option.fraudTypeId) setSelectedFraudType(option.fraudTypeId);
+    if (option.guidance) setTriageGuidance(option.guidance);
+    setCurrentQuestionId(option.next ?? "");
+  };
+
+  const resetTriage = () => {
+    setCurrentQuestionId("entry");
+    setTriageGuidance("");
+    setTriageTrail([]);
   };
 
   return (
-    <div className="min-h-screen bg-bg-dark py-12">
-      <div className="max-w-6xl mx-auto px-4 py-8">
-
-        {/* Header */}
-        <div className="text-center mb-10">
-          <h1 className="text-3xl font-bold text-text-primary mb-2">
-            Report Fraud
+    <main className="px-4 py-10 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl space-y-8">
+        <section className="section-frame graph-panel depth-card rounded-[2rem] p-7 sm:p-10">
+          <span className="eyebrow">Reporting guidance</span>
+          <h1 className="mt-5 font-[var(--font-syne)] text-4xl font-semibold tracking-[-0.06em] text-text-primary sm:text-5xl">
+            Triage the incident and move into action faster.
           </h1>
-          <p className="text-lg text-text-secondary">
-            We'll guide you through reporting your case to the right authorities
+          <p className="mt-4 max-w-3xl text-base leading-7 text-text-secondary sm:text-lg">
+            Identify the fraud pattern, narrow the right jurisdiction, and go
+            straight to the agencies most likely to help.
           </p>
-        </div>
+        </section>
 
-        {/* Progress Steps */}
-        <div className="mb-12">
-          <div className="flex items-center justify-between max-w-3xl mx-auto">
-            {steps.map((step, index) => (
-              <React.Fragment key={step.number}>
-                <div className="flex flex-col items-center">
-                  <div
-                    className={`
-                      w-12 h-12 rounded-full flex items-center justify-center font-bold transition-all border
-                      ${currentStep === step.number
-                        ? 'bg-brand-red text-text-primary border-brand-red'
-                        : currentStep > step.number || isStepComplete(step.number)
-                        ? 'bg-bg-card-dark text-text-primary border-brand-red'
-                        : 'bg-bg-card-dark text-text-secondary border-border-dark'
-                      }
-                    `}
-                  >
-                    {isStepComplete(step.number) && currentStep !== step.number
-                      ? <CheckCircle className="w-6 h-6" />
-                      : step.number
-                    }
-                  </div>
-
-                  <span
-                    className={`
-                      mt-2 text-sm font-medium
-                      ${currentStep === step.number
-                        ? 'text-brand-red'
-                        : 'text-text-secondary'
-                      }
-                    `}
-                  >
-                    {step.title}
-                  </span>
+        <div className="grid gap-8 xl:grid-cols-[0.78fr_1.22fr]">
+          <aside className="space-y-6">
+            <section className="graph-panel rounded-[1.75rem] border border-white/10 bg-white/5 p-6">
+              <div className="flex items-center justify-between gap-3">
+                <div>
+                  <h2 className="text-lg font-semibold text-text-primary">
+                    Incident triage
+                  </h2>
+                  <p className="mt-2 text-sm leading-6 text-text-secondary">
+                    Answer a few questions and we will point you to the closest fraud path.
+                  </p>
                 </div>
-
-                {index < steps.length - 1 && (
-                  <div
-                    className={`
-                      flex-1 h-0.5 mx-4 transition-all
-                      ${currentStep > step.number
-                        ? 'bg-brand-red'
-                        : 'bg-border-dark'
-                      }
-                    `}
-                  />
-                )}
-              </React.Fragment>
-            ))}
-          </div>
-        </div>
-
-        {/* Main Card */}
-        <div className="bg-bg-card-dark border border-border-dark rounded-2xl p-8 mb-10">
-
-          {/* Step 1 */}
-          {currentStep === 1 && (
-            <div>
-              <div className="mb-6">
-                <h2 className="text-xl font-bold text-text-primary mb-2">
-                  Step 1: Prepare Your Report
-                </h2>
-                <p className="text-text-secondary">
-                  Before reporting, make sure you have all necessary information ready.
-                </p>
+                <button
+                  type="button"
+                  onClick={resetTriage}
+                  className="text-sm font-medium text-text-secondary underline-offset-4 hover:text-text-primary hover:underline"
+                >
+                  Reset
+                </button>
               </div>
-              <PreparationChecklist
-                onComplete={() => {
-                  setPreparationComplete(true);
-                  setCurrentStep(2);
-                }}
-              />
-            </div>
-          )}
 
-          {/* Step 2 */}
-          {currentStep === 2 && (
-            <div>
-              <div className="mb-6">
-                <h2 className="text-xl font-bold text-text-primary mb-2">
-                  Step 2: Select Fraud Type
-                </h2>
-                <p className="text-text-secondary">
-                  Choose the type of fraud you experienced.
-                </p>
-              </div>
-              <FraudTypeSelector
-                selectedType={selectedFraudType}
-                onSelect={setSelectedFraudType}
-              />
-            </div>
-          )}
+              {currentQuestion ? (
+                <div className="mt-5 space-y-3">
+                  <p className="text-sm font-semibold uppercase tracking-[0.08em] text-text-tertiary">
+                    {currentQuestion.prompt}
+                  </p>
+                  {currentQuestion.options.map((option) => (
+                    <button
+                      key={option.value}
+                      type="button"
+                      onClick={() => handleTriageAnswer(currentQuestion, option)}
+                      className="w-full rounded-[1.35rem] border border-white/10 bg-bg-card-dark px-4 py-4 text-left text-sm font-medium text-text-primary transition-colors hover:border-white/20"
+                    >
+                      {option.label}
+                    </button>
+                  ))}
+                </div>
+              ) : (
+                <div className="mt-5 rounded-[1.35rem] border border-white/10 bg-bg-card-dark p-4">
+                  <p className="text-sm font-semibold text-text-primary">Triage complete</p>
+                  <p className="mt-2 text-sm leading-6 text-text-secondary">
+                    {triageGuidance || "A likely fraud path is now matched below. Review it and continue to agency selection."}
+                  </p>
+                </div>
+              )}
 
-          {/* Step 3 */}
-          {currentStep === 3 && (
-            <div>
-              <div className="mb-6">
-                <h2 className="text-xl font-bold text-text-primary mb-2">
-                  Step 3: Select Location
-                </h2>
-                <p className="text-text-secondary">
-                  Help us recommend the right authorities (optional but recommended).
-                </p>
-              </div>
-              <LocationSelector
-                selectedRegion={selectedRegion}
-                selectedCountry={selectedCountry}
-                onRegionSelect={(r) => {
-                  setSelectedRegion(r);
-                  setSelectedCountry(undefined);
-                }}
-                onCountrySelect={setSelectedCountry}
-              />
-            </div>
-          )}
+              {triageTrail.length > 0 ? (
+                <div className="mt-5 flex flex-wrap gap-2">
+                  {triageTrail.map((entry) => (
+                    <span
+                      key={entry}
+                      className="rounded-full border border-white/10 px-3 py-1 text-xs text-text-secondary"
+                    >
+                      {entry.split(":")[1]}
+                    </span>
+                  ))}
+                </div>
+              ) : null}
+            </section>
 
-          {/* Step 4 */}
-          {currentStep === 4 && (
-            <div>
-              <div className="mb-6">
-                <h2 className="text-xl font-bold text-text-primary mb-2">
-                  Step 4: Recommended Agencies
-                </h2>
-                <p className="text-text-secondary">
-                  Based on your information, here are the agencies you should contact.
-                </p>
+            <section className="graph-panel rounded-[1.75rem] border border-white/10 bg-white/5 p-6">
+              <h2 className="text-lg font-semibold text-text-primary">Core preparation</h2>
+              <p className="mt-2 text-sm leading-6 text-text-secondary">
+                These are the highest-signal preparation steps for most fraud reports.
+              </p>
+
+              <div className="mt-5 space-y-3">
+                {essentials.map((item) => {
+                  const Icon = prepIcons[item.id as keyof typeof prepIcons] ?? ShieldAlert;
+
+                  return (
+                    <div
+                      key={item.id}
+                      className="rounded-2xl border border-white/10 px-4 py-3"
+                    >
+                      <div className="flex items-start gap-3">
+                        <span className="mt-0.5 flex h-9 w-9 items-center justify-center rounded-xl bg-white/5">
+                          <Icon className="h-4 w-4 text-brand-red" />
+                        </span>
+                        <div>
+                          <p className="text-sm font-medium text-text-primary">{item.title}</p>
+                          <p className="mt-1 text-sm leading-6 text-text-secondary">
+                            {item.description}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
+            </section>
+          </aside>
+
+          <div className="space-y-8">
+            <section className="graph-panel rounded-[1.75rem] border border-white/10 bg-white/5 p-6 sm:p-7">
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+                <div>
+                  <h2 className="text-2xl font-semibold tracking-[-0.04em] text-text-primary">
+                    Match the fraud type
+                  </h2>
+                  <p className="mt-2 text-sm leading-6 text-text-secondary">
+                    If the triage path already identified the pattern, confirm it
+                    here. Otherwise, choose the closest match directly.
+                  </p>
+                </div>
+                {selectedFraudType ? (
+                  <button
+                    type="button"
+                    onClick={() => setSelectedFraudType("")}
+                    className="text-sm font-medium text-text-secondary underline-offset-4 hover:text-text-primary hover:underline"
+                  >
+                    Clear selection
+                  </button>
+                ) : null}
+              </div>
+
+              <div className="mt-6 grid gap-3 md:grid-cols-2">
+                {FRAUD_TYPES.map((fraudType) => {
+                  const Icon =
+                    fraudTypeIcons[fraudType.id as keyof typeof fraudTypeIcons] ?? ShieldAlert;
+                  const isSelected = selectedFraudType === fraudType.id;
+
+                  return (
+                    <button
+                      key={fraudType.id}
+                      type="button"
+                      onClick={() => setSelectedFraudType(fraudType.id)}
+                      className={`rounded-[1.5rem] border p-5 text-left transition-colors ${
+                        isSelected
+                          ? "border-white/30 bg-white/10"
+                          : "border-white/10 bg-bg-card-dark hover:border-white/20"
+                      }`}
+                    >
+                      <div className="flex items-start justify-between gap-3">
+                        <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white/5">
+                          <Icon className="h-5 w-5 text-brand-red" />
+                        </span>
+                        <span className="rounded-full border border-white/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.08em] text-text-secondary">
+                          {fraudType.urgency}
+                        </span>
+                      </div>
+
+                      <p className="mt-4 text-lg font-semibold text-text-primary">
+                        {fraudType.name}
+                      </p>
+                      <p className="mt-2 text-sm leading-6 text-text-secondary">
+                        {fraudType.description}
+                      </p>
+                      <p className="mt-3 text-xs uppercase tracking-[0.08em] text-text-tertiary">
+                        Example: {fraudType.examples[0]}
+                      </p>
+                    </button>
+                  );
+                })}
+              </div>
+            </section>
+
+            <section className="graph-panel rounded-[1.75rem] border border-white/10 bg-white/5 p-6">
+              <h2 className="text-lg font-semibold text-text-primary">
+                Optional location filter
+              </h2>
+              <p className="mt-2 text-sm leading-6 text-text-secondary">
+                Add region or country when you want tighter agency matches.
+              </p>
+
+              <div className="mt-5 grid gap-4 sm:grid-cols-2">
+                <label className="block">
+                  <span className="mb-2 block text-sm font-medium text-text-primary">
+                    Region
+                  </span>
+                  <select
+                    value={selectedRegion}
+                    onChange={(event) => {
+                      setSelectedRegion(event.target.value);
+                      setSelectedCountry("");
+                    }}
+                    className="w-full rounded-2xl border border-white/10 bg-bg-card-dark px-4 py-3 text-sm text-text-primary outline-none"
+                  >
+                    <option value="">Any region</option>
+                    {REGIONS.filter((region) => region.value !== "all").map((region) => (
+                      <option key={region.value} value={region.value}>
+                        {region.label}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+
+                <label className="block">
+                  <span className="mb-2 block text-sm font-medium text-text-primary">
+                    Country
+                  </span>
+                  <select
+                    value={selectedCountry}
+                    onChange={(event) => setSelectedCountry(event.target.value)}
+                    disabled={availableCountries.length === 0}
+                    className="w-full rounded-2xl border border-white/10 bg-bg-card-dark px-4 py-3 text-sm text-text-primary outline-none disabled:opacity-50"
+                  >
+                    <option value="">Any country in region</option>
+                    {availableCountries.map((country) => (
+                      <option key={country} value={country}>
+                        {country}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              </div>
+            </section>
+
+            <section className="graph-panel graph-panel-active rounded-[1.75rem] border border-white/10 bg-[rgba(17,26,43,0.72)] p-6 sm:p-7">
+              <div className="mb-5 flex items-center justify-between gap-4">
+                <div>
+                  <h2 className="text-2xl font-semibold tracking-[-0.04em] text-text-primary">
+                    Recommended agencies
+                  </h2>
+                  <p className="mt-2 text-sm leading-6 text-text-secondary">
+                    Start with the strongest agency match for this case, then use
+                    the others if you need a wider reporting trail.
+                  </p>
+                </div>
+                <a
+                  href="/library"
+                  className="inline-flex items-center gap-2 text-sm font-semibold text-text-primary underline-offset-4 hover:underline"
+                >
+                  View scam library
+                  <ExternalLink className="h-4 w-4 text-text-secondary" />
+                </a>
+              </div>
+
               <AgencyRecommendations
                 recommendations={recommendations}
-                fraudTypeId={selectedFraudType}
+                fraudTypeId={selectedFraudType || undefined}
               />
-            </div>
-          )}
-        </div>
-
-        {/* Navigation */}
-        <div className="flex justify-between items-center max-w-3xl mx-auto">
-          {/* Back Button */}
-          <button
-            onClick={() => setCurrentStep((s) => Math.max(1, s - 1))}
-            disabled={currentStep === 1}
-            className={`
-              flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all border
-              ${currentStep === 1
-                ? 'bg-bg-card-dark text-text-secondary border-border-dark cursor-not-allowed'
-                : 'bg-bg-dark text-text-primary border-border-dark hover:bg-bg-card-dark'
-              }
-            `}
-          >
-            <ArrowLeft className="w-5 h-5" />
-            Back
-          </button>
-
-          {/* Continue / Complete */}
-          {currentStep < 4 ? (
-            <button
-              onClick={() => setCurrentStep((s) => Math.min(4, s + 1))}
-              disabled={
-                (currentStep === 1 && !preparationComplete) ||
-                (currentStep === 2 && !selectedFraudType)
-              }
-              className={`
-                flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all
-                ${(currentStep === 1 && !preparationComplete) ||
-                  (currentStep === 2 && !selectedFraudType)
-                  ? 'bg-bg-card-dark text-text-secondary cursor-not-allowed'
-                  : 'bg-brand-red text-text-primary hover:bg-brand-rose'
-                }
-              `}
-            >
-              Continue
-              <ArrowRight className="w-5 h-5" />
-            </button>
-          ) : (
-            <button
-              onClick={() => router.push('/')}
-              className="flex items-center gap-2 px-4 py-3 rounded-lg font-medium bg-brand-red text-text-primary hover:bg-brand-rose transition-all"
-            >
-              <CheckCircle className="w-4 h-4" />
-              Complete Report
-            </button>
-          )}
-        </div>
-
-        {/* Alerts */}
-        {(currentStep === 1 && !preparationComplete) && (
-          <div className="mt-6 max-w-3xl mx-auto">
-            <div className="bg-bg-card-dark border border-brand-red rounded-lg p-4 flex items-start gap-3">
-              <AlertCircle className="w-5 h-5 text-brand-red mt-0.5 shrink-0" />
-              <div className="text-sm text-text-primary">
-                <strong>Complete all required items</strong> before proceeding to the next step.
-              </div>
-            </div>
+            </section>
           </div>
-        )}
-
-        {(currentStep === 2 && !selectedFraudType) && (
-          <div className="mt-6 max-w-3xl mx-auto">
-            <div className="bg-bg-card-dark border border-brand-red rounded-lg p-4 flex items-start gap-3">
-              <AlertCircle className="w-5 h-5 text-brand-red mt-0.5 shrink-0" />
-              <div className="text-sm text-text-primary">
-                <strong>Select a fraud type</strong> to continue to the next step.
-              </div>
-            </div>
-          </div>
-        )}
-
+        </div>
       </div>
-    </div>
+    </main>
   );
-};
-
-export default ReportFraudPage;
+}

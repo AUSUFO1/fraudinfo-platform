@@ -1,13 +1,12 @@
 "use client";
 
-import React from "react";
 import {
+  CheckCircle2,
   ExternalLink,
-  CheckCircle,
-  Wrench,
   Newspaper,
   Share2,
   Shield,
+  Wrench,
 } from "lucide-react";
 import { FraudResource } from "@/lib/fraud-resources";
 
@@ -15,106 +14,60 @@ interface ResourceCardProps {
   resource: FraudResource;
 }
 
-const ResourceCard = ({ resource }: ResourceCardProps) => {
-  const getCategoryIcon = () => {
-    const base = "text-brand-red md:w-5 md:h-5 w-4 h-4";
+const categoryIconMap = {
+  tool: Wrench,
+  blog: Newspaper,
+  social: Share2,
+  agency: Shield,
+};
 
-    switch (resource.category) {
-      case "tool":
-        return <Wrench className={base} />;
-      case "blog":
-        return <Newspaper className={base.replace("text-brand-red", "text-brand-rose")} />;
-      case "social":
-        return <Share2 className={base} />;
-      case "agency":
-        return <Shield className={base.replace("text-brand-red", "text-brand-rose")} />;
-      default:
-        return <Shield className={base} />;
-    }
-  };
-
-  const getCategoryTextColor = () => {
-    switch (resource.category) {
-      case "tool":
-      case "social":
-        return "text-brand-red";
-      case "blog":
-      case "agency":
-        return "text-brand-rose";
-      default:
-        return "text-text-primary";
-    }
-  };
-
-  const getCardBorder = () => {
-    switch (resource.category) {
-      case "tool":
-      case "social":
-        return "border-brand-red/25 hover:border-brand-red";
-      case "blog":
-      case "agency":
-        return "border-brand-rose/25 hover:border-brand-rose";
-      default:
-        return "border-border-dark";
-    }
-  };
+export default function ResourceCard({ resource }: ResourceCardProps) {
+  const Icon = categoryIconMap[resource.category] ?? Shield;
 
   return (
     <a
       href={resource.url}
       target="_blank"
       rel="noopener noreferrer"
-      className={`group block p-4 md:p-5 rounded-xl border bg-bg-card-dark transition-all duration-300
-        hover:shadow-xl md:hover:scale-[1.03] hover:scale-[1.01] ${getCardBorder()} h-full flex flex-col`}
+      className="group flex h-full flex-col rounded-[1.5rem] border border-white/10 bg-[rgba(11,18,32,0.85)] p-5 transition-colors hover:border-white/20"
     >
-      {/* TOP ROW */}
-      <div className="flex items-start justify-between mb-3">
-        <div
-          className={`p-1.5 md:p-2 rounded-lg bg-bg-card-dark/40 ${getCategoryTextColor()}`}
-        >
-          {getCategoryIcon()}
-        </div>
-
-        {resource.verified && (
-          <div className="flex items-center gap-1 px-2 py-1 bg-brand-red/20 text-brand-red text-[10px] md:text-xs font-semibold rounded-full">
-            <CheckCircle className="w-3 h-3" />
-            <span>Verified</span>
-          </div>
-        )}
+      <div className="flex items-start justify-between gap-4">
+        <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--accent-soft)] text-brand-red">
+          <Icon className="h-4 w-4" />
+        </span>
+        {resource.verified ? (
+          <span className="inline-flex items-center gap-1 rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.08em] text-emerald-200">
+            <CheckCircle2 className="h-3.5 w-3.5" />
+            Verified
+          </span>
+        ) : null}
       </div>
 
-      {/* TITLE */}
-      <h3 className="text-sm md:text-lg font-bold text-white mb-2 group-hover:text-brand-red transition-colors line-clamp-1">
+      <h3 className="mt-5 text-lg font-semibold text-text-primary transition-colors group-hover:text-white">
         {resource.name}
       </h3>
-
-      {/* DESCRIPTION */}
-      <p className="text-xs md:text-sm text-text-secondary mb-3 line-clamp-2 grow">
+      <p className="mt-3 grow text-sm leading-6 text-text-secondary">
         {resource.description}
       </p>
 
-      {/* TAGS */}
-      <div className="flex flex-wrap gap-1.5 md:gap-2 mb-3">
+      <div className="mt-5 flex flex-wrap gap-2">
         {resource.tags.slice(0, 3).map((tag) => (
           <span
             key={tag}
-            className="px-2 py-1 bg-bg-card-dark/40 text-text-secondary text-[10px] md:text-xs rounded-full"
+            className="rounded-full border border-white/10 px-3 py-1 text-xs text-text-secondary"
           >
             {tag}
           </span>
         ))}
       </div>
 
-      {/* FOOTER */}
-      <div className="flex items-center justify-between pt-3 border-t border-border-dark mt-auto">
-        <span className={`text-[11px] md:text-xs font-medium ${getCategoryTextColor()}`}>
-          {resource.category.charAt(0).toUpperCase() + resource.category.slice(1)}
+      <div className="mt-6 flex items-center justify-between border-t border-white/10 pt-4 text-sm">
+        <span className="capitalize text-text-secondary">{resource.category}</span>
+        <span className="inline-flex items-center gap-2 font-medium text-text-primary">
+          Open
+          <ExternalLink className="h-4 w-4 text-text-secondary transition-colors group-hover:text-text-primary" />
         </span>
-
-        <ExternalLink className="w-3.5 h-3.5 md:w-4 md:h-4 text-text-secondary group-hover:text-white transition-colors" />
       </div>
     </a>
   );
-};
-
-export default ResourceCard;
+}

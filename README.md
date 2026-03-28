@@ -1,99 +1,167 @@
 # FraudInfo
 
-A modern fraud detection and information platform built to help users identify, report, and stay informed about fraudulent activities.
+FraudInfo is a fraud-response platform built with Next.js. It helps users investigate suspicious activity, check links and websites, understand scam patterns, find the right reporting agencies, and stay informed through curated alert feeds.
 
-## Overview
+## What the product does
 
-FraudInfo provides real-time fraud alerts, scam databases, and community-driven reporting to combat online and offline fraud. Built with Next.js for optimal performance and user experience.
+- Landing page with a premium fraud-tech experience, scanner visuals, and guided navigation
+- Fraud reporting workflow with incident triage and agency recommendations
+- Website checker workspace that routes users through trusted verification sources
+- Scam pattern library with red flags, response guidance, and regional signal summaries
+- Agency directory for verified reporting and support channels
+- Prevention and fraud-resource pages for education and reference
+- Live alert cards backed by server routes and cache-aware feed handling
 
-## Features
+## Main routes
 
-- **Fraud Database** - Search and browse comprehensive fraud reports and scam patterns
-- **Real-time Alerts** - Stay updated on the latest fraud trends and warnings
-- **Community Reports** - Submit and verify fraud incidents to help protect others
-- **Educational Resources** - Learn how to identify and prevent common scams
+- `/` - Product landing page
+- `/report` - Triage and reporting guidance
+- `/checker` - Website and link verification workspace
+- `/library` - Scam pattern library and regional signal board
+- `/agencies` - Verified agency directory
+- `/prevention` - Prevention guidance
+- `/infosearch` - Search across agencies and resources
+- `/about` - Product/about page
 
-## Tech Stack
+## Stack
 
-- **Framework:** Next.js 15 (App Router)
-- **Language:** TypeScript
-- **Styling:** Tailwind CSS / CSS Modules
+- Next.js 16 App Router
+- TypeScript
+- Tailwind CSS v4
+- Lucide React
+- Vercel Analytics
+- Cloudflare KV for cached feed responses
 
-## Getting Started
+## Backend behavior
+
+This project includes backend logic through Next.js route handlers in `app/api`.
+
+- `app/api/alerts/route.ts`
+  Serves official alert content with cache support and stale-cache fallback
+- `app/api/rss/route.ts`
+  Serves trending news content with cache support and stale-cache fallback
+- `app/api/contribute/route.ts`
+  Handles contribution/contact style submissions
+
+The app does not collect user fraud reports directly. It helps users understand incidents and route themselves to the right external agencies.
+
+## Current product features
+
+### 1. Reporting workflow
+
+The report experience focuses on clarity and speed:
+
+- Quick incident triage
+- Fraud-type matching
+- Optional location narrowing
+- Ranked agency recommendations
+
+### 2. Website checker
+
+The checker is a practical verification workflow, not a fake scanner.
+
+It currently helps users investigate a URL or domain through trusted external sources such as:
+
+- URLScan
+- VirusTotal
+- Google Safe Browsing
+- ICANN Lookup
+- ScamAdviser
+
+### 3. Scam pattern library
+
+The library includes:
+
+- Searchable scam scenarios
+- Red flags
+- Immediate next actions
+- Channel patterns
+- Regional signal summaries
+
+### 4. Alert system
+
+The homepage alert cards now behave more reliably:
+
+- Client-side polling loops were removed
+- Feed parsing was hardened
+- Cached responses are returned when available
+- Stale cached data is used when fresh providers fail
+
+## Design direction
+
+The current UI has been refactored toward a cleaner fraud-tech brand system:
+
+- Dark technical surfaces
+- Grid and graph-pattern treatments
+- Scanner-inspired motion
+- Subtle signal/scan effects across pages
+- Responsive desktop and mobile navigation
+
+## Project structure
+
+- `app/`
+  App Router pages and API routes
+- `components/`
+  Reusable UI sections, cards, navigation, and report components
+- `lib/`
+  Data utilities, feed logic, cache helpers, and product feature data
+- `data/`
+  Static structured data such as agencies
+
+## Local development
 
 ### Prerequisites
 
-- Node.js 18.x or higher
-- npm, yarn, pnpm, or bun package manager
+- Node.js 18+
+- npm
 
-### Installation
+### Install
 
-1. Clone the repository:
-```bash
-git clone https://github.com/AUSUFO1/fraudinfo-platform.git
-cd fraudinfo-platform
-```
-
-2. Install dependencies:
 ```bash
 npm install
-# or
-yarn install
-# or
-pnpm install
-# or
-bun install
 ```
 
-3. Set up environment variables:
-```bash
-cp .env.example .env.local
-```
-Configure your environment variables in `.env.local`
+### Run development server
 
-4. Run the development server:
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-5. Open [http://localhost:3000](http://localhost:3000) in your browser
+### Production build
 
-The page will auto-reload when you make changes to `app/page.tsx` or other files.
+```bash
+npm run build
+```
 
-### Key Files
+## Environment variables
 
-- `app/page.tsx` - Main landing page
-- `app/layout.tsx` - Root layout component
-- `next.config.js` - Next.js configuration
+The project can run without every integration enabled, but these are relevant for full functionality:
 
-## Deployment
+- `GNEWS_API_KEY`
+  Used by the trending news route
+- `CLOUDFLARE_ACCOUNT_ID`
+- `CLOUDFLARE_API_TOKEN`
+- `CLOUDFLARE_KV_NAMESPACE_ID`
+- `CACHE_TTL_SECONDS`
 
-For detailed deployment instructions, see the [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying).
+If Cloudflare KV is configured, alert/news caching becomes more resilient.
 
-## Contributing
+## Notes
 
-Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
+- Feed providers can fail or rate-limit. The app now falls back to cached content when possible.
+- There is still an existing workspace-root warning during build because multiple lockfiles are detected outside this project folder.
+- `baseline-browser-mapping` also reports an existing staleness warning during build.
 
-## Resources
+## Status
 
-- [Next.js Documentation](https://nextjs.org/docs) - Learn about Next.js features and API
-- [Learn Next.js](https://nextjs.org/learn) - Interactive Next.js tutorial
-- [Next.js GitHub](https://github.com/vercel/next.js) - Feedback and contributions welcome
+The current app is in a strong presentation-ready state with:
+
+- refined landing page
+- stabilized feed behavior
+- real checker workflow
+- triage-driven reporting guidance
+- scam library and regional signal board
 
 ## License
 
-[MIT](LICENSE)
-
-## Support
-
-If you encounter any issues or have questions, please file an issue on the GitHub repository.
-
----
-
-Built to provide fraud resources and protect communities
+MIT

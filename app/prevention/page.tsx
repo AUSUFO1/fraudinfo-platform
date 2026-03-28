@@ -8,7 +8,7 @@ import PreventionResources from "@/components/prevention/PreventionResources";
 
 export default function PreventionPage() {
   return (
-    <div className="bg-bg-dark text-text-primary">
+    <div className="graph-panel bg-bg-dark text-text-primary">
       <PreventionHero />
       <PreventionPillars />
       <PreventionDetailedSection />

@@ -62,6 +62,20 @@ function isFraudRelated(title: string, description: string): boolean {
   return FRAUD_KEYWORDS.some(keyword => combined.includes(keyword));
 }
 
+function toSafeText(value: unknown): string {
+  if (typeof value === 'string') return value.trim();
+  if (Array.isArray(value)) {
+    return value
+      .map((item) => (typeof item === 'string' ? item : ''))
+      .join(' ')
+      .trim();
+  }
+  if (value && typeof value === 'object') {
+    return JSON.stringify(value).trim();
+  }
+  return '';
+}
+
 async function fetchFeed(
   feedUrl: string, 
   sourceName: string,
@@ -71,8 +85,12 @@ async function fetchFeed(
     const feed = await parser.parseURL(feedUrl);
     const items = (feed.items || []).map((it: any, idx: number) => {
       const pubDate = it.isoDate || it.pubDate || new Date().toISOString();
-      const title = (it.title || '').trim();
-      const description = (it.contentSnippet || it.content || it.summary || '').trim();
+      const title = toSafeText(it.title) || 'Untitled alert';
+      const description =
+        toSafeText(it.contentSnippet) ||
+        toSafeText(it.content) ||
+        toSafeText(it.summary) ||
+        '';
       
       return {
         id: `${sourceName}-${idx}-${new Date(pubDate).getTime()}`,
