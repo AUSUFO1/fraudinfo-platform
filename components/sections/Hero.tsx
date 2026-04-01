@@ -31,7 +31,7 @@ export default function Hero() {
   return (
     <section className="px-4 pb-16 pt-16 sm:px-6 sm:pb-20 sm:pt-18 lg:px-8 lg:pt-16">
       <div className="mx-auto max-w-7xl">
-        <div className="section-frame graph-panel depth-card relative overflow-hidden rounded-[2rem] p-7 sm:p-10">
+        <div className="relative overflow-hidden px-1 py-2 sm:px-2">
           <div className="pointer-events-none absolute -right-10 top-10 opacity-60 lg:hidden">
             <div className="scanner-orb flex h-[160px] w-[160px] items-center justify-center rounded-full border border-white/10 bg-[rgba(13,20,35,0.45)]">
               <div className="scanner-line" />

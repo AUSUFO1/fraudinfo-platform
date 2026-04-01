@@ -30,7 +30,7 @@ export default function AgencyRecommendations({
 }: AgencyRecommendationsProps) {
   if (!fraudTypeId) {
     return (
-      <div className="rounded-[1.75rem] border border-dashed border-white/10 px-6 py-12 text-center">
+      <div className="rounded-[1.5rem] border border-dashed border-white/10 bg-bg-card-dark/50 px-6 py-12 text-center">
         <p className="text-lg font-semibold text-text-primary">
           Select a fraud type to get reporting options.
         </p>
@@ -49,7 +49,7 @@ export default function AgencyRecommendations({
 
   if (recommendations.length === 0) {
     return (
-      <div className="rounded-[1.75rem] border border-white/10 bg-white/5 p-6">
+      <div className="rounded-[1.5rem] border border-white/10 bg-bg-card-dark/70 p-6">
         <div className="flex items-start gap-3">
           <AlertCircle className="mt-0.5 h-5 w-5 text-amber-300" />
           <div>
@@ -75,7 +75,7 @@ export default function AgencyRecommendations({
   return (
     <div className="space-y-4">
       <div
-        className={`flex items-start gap-3 rounded-[1.5rem] border px-5 py-4 ${urgencyTone[urgencyKey]}`}
+        className={`flex items-start gap-3 rounded-[1.25rem] border px-5 py-4 ${urgencyTone[urgencyKey]}`}
       >
         <Clock3 className="mt-0.5 h-4 w-4 shrink-0" />
         <div>
@@ -92,7 +92,7 @@ export default function AgencyRecommendations({
         return (
           <article
             key={agency.id}
-            className="rounded-[1.75rem] border border-white/10 bg-white/5 p-6"
+            className="rounded-[1.5rem] border border-white/10 bg-bg-card-dark/80 p-6"
           >
             <div className="flex flex-col gap-6 lg:flex-row lg:justify-between">
               <div className="max-w-2xl">
@@ -122,7 +122,7 @@ export default function AgencyRecommendations({
                   {matchReasons.slice(0, 3).map((reason) => (
                     <span
                       key={reason}
-                      className="rounded-full border border-white/10 px-3 py-1 text-xs text-text-secondary"
+                      className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-text-secondary"
                     >
                       {reason}
                     </span>
@@ -136,7 +136,7 @@ export default function AgencyRecommendations({
                     href={agency.website}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-between rounded-2xl bg-brand-red px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-rose"
+                    className="pill-button pill-button-primary flex w-full items-center justify-between rounded-2xl px-4 py-3 text-sm font-semibold"
                   >
                     <span className="flex items-center gap-2">
                       <Globe className="h-4 w-4" />
@@ -149,7 +149,7 @@ export default function AgencyRecommendations({
                 {agency.phone ? (
                   <a
                     href={`tel:${agency.phone}`}
-                    className="flex items-center gap-2 rounded-2xl border border-white/10 px-4 py-3 text-sm font-medium text-text-primary transition-colors hover:border-white/20"
+                    className="flex items-center gap-2 rounded-[1rem] border border-white/10 px-4 py-3 text-sm font-medium text-text-primary transition-colors hover:border-white/20"
                   >
                     <Phone className="h-4 w-4 text-text-secondary" />
                     {agency.phone}
@@ -159,7 +159,7 @@ export default function AgencyRecommendations({
                 {agency.email ? (
                   <a
                     href={`mailto:${agency.email}`}
-                    className="flex items-center gap-2 rounded-2xl border border-white/10 px-4 py-3 text-sm font-medium text-text-primary transition-colors hover:border-white/20"
+                    className="flex items-center gap-2 rounded-[1rem] border border-white/10 px-4 py-3 text-sm font-medium text-text-primary transition-colors hover:border-white/20"
                   >
                     <Mail className="h-4 w-4 text-text-secondary" />
                     {agency.email}

@@ -25,15 +25,15 @@ export default function WebsiteCheckerCard() {
         </p>
         <ul className="space-y-2 text-sm text-text-secondary">
           <li className="flex items-start gap-2">
-            <span className="mt-1 text-brand-red">•</span>
+            <span className="mt-1 text-brand-red">&bull;</span>
             <span>Phishing sites and fake domains</span>
           </li>
           <li className="flex items-start gap-2">
-            <span className="mt-1 text-brand-red">•</span>
+            <span className="mt-1 text-brand-red">&bull;</span>
             <span>Malicious links and downloads</span>
           </li>
           <li className="flex items-start gap-2">
-            <span className="mt-1 text-brand-red">•</span>
+            <span className="mt-1 text-brand-red">&bull;</span>
             <span>Suspicious payment portals</span>
           </li>
         </ul>
@@ -42,10 +42,12 @@ export default function WebsiteCheckerCard() {
       <div className="mt-6 border-t border-white/10 pt-4">
         <Link
           href="/checker"
-          className="inline-flex items-center gap-2 text-sm font-semibold text-text-primary underline-offset-4 hover:underline"
+          className="pill-button pill-button-primary inline-flex w-full items-center justify-center gap-2 sm:w-auto"
         >
           Open website checker
-          <ArrowUpRight className="h-4 w-4 text-text-secondary" />
+          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-950 text-white">
+            <ArrowUpRight className="h-4 w-4" />
+          </span>
         </Link>
       </div>
     </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import {
   Ban,
   Building2,
@@ -103,27 +103,66 @@ export default function ReportFraudPage() {
   return (
     <main className="px-4 py-10 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl space-y-8">
-        <section className="section-frame graph-panel depth-card rounded-[2rem] p-7 sm:p-10">
+        <section className="rounded-[2rem] border border-white/10 bg-[rgba(17,26,43,0.72)] p-7 sm:p-10">
           <span className="eyebrow">Reporting guidance</span>
           <h1 className="mt-5 font-[var(--font-syne)] text-4xl font-semibold tracking-[-0.06em] text-text-primary sm:text-5xl">
-            Triage the incident and move into action faster.
+            Report fraud with a clear path.
           </h1>
           <p className="mt-4 max-w-3xl text-base leading-7 text-text-secondary sm:text-lg">
-            Identify the fraud pattern, narrow the right jurisdiction, and go
-            straight to the agencies most likely to help.
+            Start with the incident type, add location only if it helps, and go
+            straight to the reporting agencies most likely to matter.
           </p>
+
+          <div className="mt-8 grid gap-3 md:grid-cols-3">
+            {[
+              {
+                step: "Step 1",
+                title: "Answer the triage prompt",
+                description: "Use the guided question path if you are unsure what happened.",
+              },
+              {
+                step: "Step 2",
+                title: "Confirm the fraud type",
+                description: "Pick the closest match so the recommendations can tighten up.",
+              },
+              {
+                step: "Step 3",
+                title: "Use the agency matches",
+                description: "Start with the strongest match and continue if you need wider escalation.",
+              },
+            ].map((item) => (
+              <div
+                key={item.title}
+                className="rounded-[1.4rem] border border-white/10 bg-bg-card-dark/90 p-5"
+              >
+                <p className="text-xs font-semibold uppercase tracking-[0.08em] text-brand-red">
+                  {item.step}
+                </p>
+                <p className="mt-3 text-base font-semibold text-text-primary">
+                  {item.title}
+                </p>
+                <p className="mt-2 text-sm leading-6 text-text-secondary">
+                  {item.description}
+                </p>
+              </div>
+            ))}
+          </div>
         </section>
 
         <div className="grid gap-8 xl:grid-cols-[0.78fr_1.22fr]">
           <aside className="space-y-6">
-            <section className="graph-panel rounded-[1.75rem] border border-white/10 bg-white/5 p-6">
+            <section className="rounded-[1.75rem] border border-white/10 bg-[rgba(17,26,43,0.72)] p-6">
               <div className="flex items-center justify-between gap-3">
                 <div>
-                  <h2 className="text-lg font-semibold text-text-primary">
-                    Incident triage
+                  <p className="text-xs font-semibold uppercase tracking-[0.08em] text-brand-red">
+                    Step 1
+                  </p>
+                  <h2 className="mt-2 text-lg font-semibold text-text-primary">
+                    Start with the triage question
                   </h2>
                   <p className="mt-2 text-sm leading-6 text-text-secondary">
-                    Answer a few questions and we will point you to the closest fraud path.
+                    If you are not sure what kind of fraud this is, answer the
+                    prompt below and we will narrow the path.
                   </p>
                 </div>
                 <button
@@ -145,14 +184,14 @@ export default function ReportFraudPage() {
                       key={option.value}
                       type="button"
                       onClick={() => handleTriageAnswer(currentQuestion, option)}
-                      className="w-full rounded-[1.35rem] border border-white/10 bg-bg-card-dark px-4 py-4 text-left text-sm font-medium text-text-primary transition-colors hover:border-white/20"
+                      className="w-full rounded-[1.25rem] border border-white/10 bg-bg-card-dark px-4 py-4 text-left text-sm font-medium text-text-primary transition-colors hover:border-white/20"
                     >
                       {option.label}
                     </button>
                   ))}
                 </div>
               ) : (
-                <div className="mt-5 rounded-[1.35rem] border border-white/10 bg-bg-card-dark p-4">
+                <div className="mt-5 rounded-[1.25rem] border border-white/10 bg-bg-card-dark p-4">
                   <p className="text-sm font-semibold text-text-primary">Triage complete</p>
                   <p className="mt-2 text-sm leading-6 text-text-secondary">
                     {triageGuidance || "A likely fraud path is now matched below. Review it and continue to agency selection."}
@@ -165,7 +204,7 @@ export default function ReportFraudPage() {
                   {triageTrail.map((entry) => (
                     <span
                       key={entry}
-                      className="rounded-full border border-white/10 px-3 py-1 text-xs text-text-secondary"
+                      className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-text-secondary"
                     >
                       {entry.split(":")[1]}
                     </span>
@@ -174,10 +213,11 @@ export default function ReportFraudPage() {
               ) : null}
             </section>
 
-            <section className="graph-panel rounded-[1.75rem] border border-white/10 bg-white/5 p-6">
-              <h2 className="text-lg font-semibold text-text-primary">Core preparation</h2>
+            <section className="rounded-[1.75rem] border border-white/10 bg-[rgba(17,26,43,0.72)] p-6">
+              <h2 className="text-lg font-semibold text-text-primary">Before you report</h2>
               <p className="mt-2 text-sm leading-6 text-text-secondary">
-                These are the highest-signal preparation steps for most fraud reports.
+                These are the most useful things to gather before opening an
+                external agency site or making contact.
               </p>
 
               <div className="mt-5 space-y-3">
@@ -187,7 +227,7 @@ export default function ReportFraudPage() {
                   return (
                     <div
                       key={item.id}
-                      className="rounded-2xl border border-white/10 px-4 py-3"
+                      className="rounded-[1.25rem] border border-white/10 bg-bg-card-dark/80 px-4 py-3"
                     >
                       <div className="flex items-start gap-3">
                         <span className="mt-0.5 flex h-9 w-9 items-center justify-center rounded-xl bg-white/5">
@@ -208,11 +248,14 @@ export default function ReportFraudPage() {
           </aside>
 
           <div className="space-y-8">
-            <section className="graph-panel rounded-[1.75rem] border border-white/10 bg-white/5 p-6 sm:p-7">
+            <section className="rounded-[1.75rem] border border-white/10 bg-[rgba(17,26,43,0.72)] p-6 sm:p-7">
               <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
                 <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.08em] text-brand-red">
+                    Step 2
+                  </p>
                   <h2 className="text-2xl font-semibold tracking-[-0.04em] text-text-primary">
-                    Match the fraud type
+                    Confirm the fraud type
                   </h2>
                   <p className="mt-2 text-sm leading-6 text-text-secondary">
                     If the triage path already identified the pattern, confirm it
@@ -271,12 +314,12 @@ export default function ReportFraudPage() {
               </div>
             </section>
 
-            <section className="graph-panel rounded-[1.75rem] border border-white/10 bg-white/5 p-6">
+            <section className="rounded-[1.75rem] border border-white/10 bg-[rgba(17,26,43,0.72)] p-6">
               <h2 className="text-lg font-semibold text-text-primary">
                 Optional location filter
               </h2>
               <p className="mt-2 text-sm leading-6 text-text-secondary">
-                Add region or country when you want tighter agency matches.
+                Use this only when you want tighter matches for a specific country or region.
               </p>
 
               <div className="mt-5 grid gap-4 sm:grid-cols-2">
@@ -322,9 +365,12 @@ export default function ReportFraudPage() {
               </div>
             </section>
 
-            <section className="graph-panel graph-panel-active rounded-[1.75rem] border border-white/10 bg-[rgba(17,26,43,0.72)] p-6 sm:p-7">
+            <section className="rounded-[1.75rem] border border-white/10 bg-[rgba(17,26,43,0.72)] p-6 sm:p-7">
               <div className="mb-5 flex items-center justify-between gap-4">
                 <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.08em] text-brand-red">
+                    Step 3
+                  </p>
                   <h2 className="text-2xl font-semibold tracking-[-0.04em] text-text-primary">
                     Recommended agencies
                   </h2>

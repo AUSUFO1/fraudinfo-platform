@@ -126,7 +126,7 @@ export default function StatsCards() {
             </div>
             <Link
               href="/library"
-              className="mt-6 inline-flex text-sm font-semibold text-text-primary underline-offset-4 hover:underline"
+              className="pill-button pill-button-primary mt-6 inline-flex w-full items-center justify-center sm:w-auto"
             >
               Open pattern library
             </Link>
